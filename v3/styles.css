@@ -1,0 +1,923 @@
+/* ============================================================
+   ANIA NOVA — single source of styling truth
+   Theme: "screening room" — one black stage, cream text,
+   gold reserved for interaction only.
+   ============================================================ */
+
+/* ---------- TOKENS ---------- */
+
+:root {
+  --bg: #0e0c0b;
+  --ink: #f4efe6;
+  --ink-dim: rgba(244, 239, 230, 0.72);
+  --gold: #c8a262;
+  --gold-dim: rgba(200, 162, 98, 0.4);
+  --hairline: rgba(244, 239, 230, 0.14);
+  --radius: 4px;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+  --nav-h: 6rem;
+  --content: 96rem; /* content column = 960px */
+}
+
+/* ---------- BASE ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 1.5rem);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: "Antic Didone", serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: var(--content);
+  max-width: 100%;
+  background-color: var(--bg);
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+p {
+  font-size: clamp(1.8rem, 2.5vw, 2rem);
+  line-height: 1.7;
+  margin: 1rem;
+}
+
+/* Full-bleed sections: oversized flex children of centered <main> self-center */
+main > section,
+.header-outer,
+footer {
+  width: 100vw;
+  flex-shrink: 0;
+}
+
+section {
+  position: relative;
+  padding-block: clamp(5rem, 9vh, 8rem);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+}
+
+footer {
+  background-color: var(--bg);
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--content) + 6rem);
+  padding-inline: clamp(1.5rem, 4vw, 3rem);
+  margin-inline: auto;
+}
+
+.container--wide {
+  max-width: calc(115rem + 6rem); /* showreel gets a wider stage */
+}
+
+/* ---------- HEADER ---------- */
+
+.header-outer {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg);
+  border-bottom: 1px solid var(--gold-dim);
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  animation: header-in 0.6s ease 1.8s forwards;
+}
+
+@keyframes header-in {
+  from { opacity: 0; visibility: hidden; transform: translateY(-4px); }
+  to   { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+}
+
+.topnav-960-container {
+  width: min(var(--content), 100%);
+}
+
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.topnav a {
+  display: block;
+  color: var(--ink);
+  text-align: center;
+  padding: 1.8rem 2rem;
+  font-size: 1.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+
+.topnav a:hover {
+  color: var(--gold);
+}
+
+.topnav .icon {
+  display: none;
+}
+
+/* ---------- HERO ---------- */
+
+#hero {
+  position: relative;
+  background: var(--bg);
+  padding: 0;
+}
+
+.hero-screen {
+  position: relative;
+  width: 100%;
+  height: 70svh;
+  overflow: hidden;
+  display: flex;
+}
+
+.hero-screen picture,
+.hero-screen img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero-image {
+  object-fit: cover;
+  object-position: 50% 30%;
+  animation: kenburns 24s ease-in-out infinite alternate;
+}
+
+/* Cinematic curtain masks — start covering the image, slide apart on load */
+.hero-mask {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: var(--bg);
+  z-index: 2;
+}
+
+.hero-mask--top    { top: 0;    animation: curtain-top 1.4s cubic-bezier(0.77, 0, 0.18, 1) 0.2s forwards; }
+.hero-mask--bottom { bottom: 0; animation: curtain-bottom 1.4s cubic-bezier(0.77, 0, 0.18, 1) 0.2s forwards; }
+
+@keyframes curtain-top {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-101%); }
+}
+
+@keyframes curtain-bottom {
+  from { transform: translateY(0); }
+  to   { transform: translateY(101%); }
+}
+
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+
+/* Card — sits below the hero image on the black stage */
+.hero-card {
+  text-align: center;
+  padding: 3rem 2rem 5rem;
+  background-color: var(--bg);
+  opacity: 0;
+  animation: fade-in 1s ease 1.6s forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-card h1 {
+  font-size: clamp(4.2rem, 9vw, 8.4rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  margin: 0 0 0.6rem;
+  white-space: nowrap;
+}
+
+.hero-tagline {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 0 0 2.8rem;
+}
+
+/* CTA block — sits below the image on the black stage */
+.hero-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+.btn-cv {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold);
+  padding: 1.1rem 3.4rem;
+  font-size: 1.4rem;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-cv:hover {
+  background-color: var(--gold);
+  color: var(--bg);
+}
+
+.hero-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2.4rem;
+}
+
+.hero-icons a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: var(--gold);
+  opacity: 0.8;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.hero-icons svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+}
+
+.hero-icons span {
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.hero-icons a:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+
+
+/* ---------- HEADINGS ---------- */
+
+h2 {
+  font-size: clamp(2.8rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 4rem;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 2px;
+  background-color: var(--gold);
+  margin: 1.5rem auto 0;
+}
+
+/* ---------- BIO ---------- */
+
+.bio-text {
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  line-height: 1.7;
+  color: var(--ink-dim);
+  text-align: center;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.bio-text + .bio-text {
+  margin-top: 2rem;
+}
+
+.bio-text em {
+  color: var(--ink);
+  font-style: normal;
+}
+
+/* ---------- PULL QUOTE ---------- */
+
+.pull-quote {
+  font-style: italic;
+  font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  color: var(--ink-dim);
+  text-align: center;
+  margin: -2.4rem 1rem 0.8rem;
+}
+
+.pull-quote-source {
+  font-size: 1.4rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  text-align: center;
+  margin: 0 0 4rem;
+}
+
+.pull-award {
+  font-size: 1.4rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin: 0 0 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.pull-award svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  flex-shrink: 0;
+}
+
+/* ---------- SHOWREEL & VIDEOS ---------- */
+
+.video-embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 1rem;
+  border: none;
+  margin: 0.5rem;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.video-embed img {
+  transition: filter 0.35s ease;
+}
+
+.video-embed:hover img {
+  filter: brightness(1.08);
+}
+
+.videos-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* ---------- FILMOGRAPHY ---------- */
+
+.posters-grid {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.2rem;
+  width: 100%;
+}
+
+.poster--a {
+  display: block;
+  flex: 0 1 18rem;
+  border-radius: var(--radius);
+  transition: transform 0.35s ease;
+}
+
+.poster--img {
+  width: 100%;
+  border-radius: var(--radius);
+  transition: box-shadow 0.35s ease, filter 0.35s ease;
+}
+
+.poster--a:hover {
+  transform: translateY(-6px);
+}
+
+.poster--a:hover .poster--img {
+  box-shadow: 0 16px 36px rgba(200, 162, 98, 0.28);
+  filter: brightness(1.07);
+}
+
+.display-none {
+  display: none !important;
+}
+
+#toggle {
+  margin: 3.5rem 0 0;
+  text-align: center;
+}
+
+#toggle a {
+  font-size: 1.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  border-bottom: 1px solid var(--gold);
+  padding-bottom: 0.4rem;
+  transition: color 0.25s ease;
+}
+
+#toggle a:hover {
+  color: var(--gold);
+}
+
+/* ---------- GALLERY (masonry) + LIGHTBOX ---------- */
+
+#gallery-grid {
+  column-count: 3;
+  column-gap: 12px;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+.gallery-image {
+  width: 100%;
+  cursor: zoom-in;
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  break-inside: avoid;
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.gallery-image:hover {
+  transform: scale(1.015);
+  filter: brightness(1.06);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(8, 7, 6, 0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 92vh;
+  max-width: calc(92vw - 120px);
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.lightbox .filter {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-size: cover;
+  filter: blur(24px);
+  opacity: 0.22;
+  cursor: pointer;
+}
+
+.lightbox button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.lightbox [class^="arrow"] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 200px;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  opacity: 0.5;
+}
+
+.lightbox [class^="arrow"]:hover {
+  background: transparent;
+  opacity: 1;
+}
+
+.lightbox [class^="arrow"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+}
+
+.lightbox .arrowr { right: 0; }
+.lightbox .arrowr::after { transform: translate(-50%, -50%) rotate(-45deg); border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+.lightbox .arrowl { left: 0; }
+.lightbox .arrowl::after { transform: translate(-50%, -50%) rotate(135deg); border-right: 1px solid var(--gold); border-bottom: 1px solid var(--gold); }
+
+.lightbox .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52px;
+  height: 52px;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+  opacity: 0.5;
+}
+
+.lightbox .close:hover {
+  opacity: 1;
+}
+
+.lightbox .close::before,
+.lightbox .close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.lightbox .close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.lightbox .close::after  { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* ---------- PRESS (magazine collage) ---------- */
+
+.press-grid {
+  columns: 3;
+  column-gap: 14px;
+}
+
+.press-card {
+  position: relative;
+  display: block;
+  margin-bottom: 14px;
+  break-inside: avoid;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.press-card img {
+  width: 100%;
+  transition: transform 0.45s ease, filter 0.3s ease;
+}
+
+.press-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--gold-dim);
+  box-shadow: var(--shadow);
+}
+
+.press-card:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+.press-card::after {
+  content: "\2197"; /* outward arrow */
+  position: absolute;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.9rem;
+  color: var(--gold);
+  background: rgba(14, 12, 11, 0.88);
+  border: 1px solid var(--gold-dim);
+  opacity: 0;
+  translate: 0 0.5rem;
+  transition: opacity 0.25s ease, translate 0.25s ease;
+}
+
+.press-card:hover::after {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* ---------- CONTACT ---------- */
+
+#contact {
+  text-align: center;
+  padding-block: clamp(6rem, 10vh, 9rem) clamp(7rem, 11vh, 10rem);
+}
+
+#contact p a {
+  font-size: 2rem;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.3rem;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+#contact p:last-of-type a {
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+#contact p a:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+  border-top: 1px solid var(--hairline);
+  padding-block: 3.5rem;
+}
+
+.footer-inner {
+  width: min(72rem, calc(100% - 4rem));
+  margin-inline: auto;
+}
+
+footer .links-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem 3rem;
+}
+
+.footer-text {
+  color: var(--ink-dim);
+  font-size: 1.9rem;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.2rem;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.footer-text:hover {
+  color: var(--gold);
+  border-bottom-color: var(--gold-dim);
+}
+
+/* ---------- SCROLL REVEAL ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  html.js [data-reveal].in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Staggered children inside revealed sections */
+  html.js [data-reveal].in-view .poster--a,
+  html.js [data-reveal].in-view .gallery-image,
+  html.js [data-reveal].in-view .press-card {
+    opacity: 0;
+    animation: stagger-in 0.6s ease forwards;
+    animation-delay: calc(var(--i, 0) * 0.05s);
+  }
+
+  @keyframes stagger-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ---------- YOUTUBE / VIMEO LAZY EMBEDS ---------- */
+
+:is(vimeo-embed, youtube-embed) {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  display: grid;
+  inline-size: 100%;
+  position: relative;
+}
+
+:is(vimeo-embed, youtube-embed) button {
+  background-color: var(--button-bgc, rgba(0, 0, 0, 0.45));
+  block-size: 56px;
+  border: 1.5px solid var(--gold);
+  border-radius: 0.6rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  display: grid;
+  inline-size: 84px;
+  opacity: 0.85;
+  position: absolute;
+  place-self: center;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  padding: 0;
+}
+
+:is(vimeo-embed, youtube-embed) button::before {
+  aspect-ratio: 1 / 1;
+  background: var(--gold);
+  block-size: 1.5em;
+  clip-path: polygon(20% 0%, 20% 100%, 100% 50%);
+  content: "";
+  place-self: center;
+}
+
+:is(vimeo-embed, youtube-embed) :is(iframe, img) {
+  block-size: 100%;
+  border: 0;
+  border-radius: inherit;
+  inline-size: 100%;
+  inset: 0;
+  object-fit: cover;
+  position: absolute;
+}
+
+:is(vimeo-embed button) {
+  --button-bgc: rgba(200, 162, 98, 0.3);
+}
+
+:is(vimeo-embed, youtube-embed):hover button {
+  opacity: 1;
+}
+
+:is(vimeo-embed, youtube-embed) :is(button, img).hide-video-ui {
+  display: none !important;
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media screen and (max-width: 960px) {
+  main {
+    width: 100%;
+  }
+
+  /* Filmography becomes a swipeable poster rail */
+  .posters-grid {
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 1.4rem;
+    padding: 0.5rem 0.5rem 1.8rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .posters-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .poster--a {
+    flex: 0 0 auto;
+    width: min(46vw, 26rem);
+    scroll-snap-align: center;
+  }
+
+  .videos-row {
+    flex-direction: column;
+  }
+
+  .press-grid {
+    columns: 2;
+  }
+
+  /* Mobile nav */
+  .topnav a {
+    display: none;
+  }
+
+  .topnav a.icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 2.4rem;
+  }
+
+  .topnav.responsive {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  .topnav.responsive a {
+    display: block;
+    text-align: center;
+    padding: 1.7rem 2rem;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .topnav.responsive a.icon {
+    border-top: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero-card {
+    padding-bottom: 6rem;
+  }
+
+  .hero-tagline {
+    margin-bottom: 2rem;
+  }
+
+  section {
+    padding-block: 4.5rem;
+  }
+
+  #gallery-grid {
+    column-count: 2;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .press-grid {
+    columns: 1;
+  }
+
+  .poster--a {
+    width: 62vw;
+  }
+}
+
+/* ---------- REDUCED MOTION ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-image,
+  .hero-mask,
+  .hero-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

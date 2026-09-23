@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="International award-winning actress graduated from MetFilm School London, known for Hysteria (2023), Headhunters (2022), Wisting (2021) ..." />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="normalize.css" />
+    <link rel="stylesheet" href="gallery.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&display=block" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <title>Ania Nova</title>
+
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+
+      .filmography {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr); /* 5 columns on desktop */
+          gap: 10px; /* Space between images */
+          padding: 20px;
+      }
+
+      .filmography img {
+          width: 100%; /* Full width of the grid cell */
+          height: auto; /* Maintain aspect ratio */
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+          .filmography {
+              grid-template-columns: 1fr; /* 1 column on mobile */
+          }
+      }
+  </style>
+
+  </head>
+
+  <body>
+    <main>
+      <div class="header-outer">
+        <div class="topnav-960-container">
+          <div class="topnav" id="myTopnav">
+            <a href="#showreel">SHOWREEL</a>
+            <a href="#filmography">FILMOGRAPHY</a>
+            <a href="#gallery">GALLERY</a>
+            <a href="#videos">VIDEOS</a>
+            <a href="#press">PRESS</a>
+            <a href="#contact">CONTACT</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()" title="">&#9776;</a>
+          </div>
+        </div>
+      </div>
+
+      <section id="hero-container">
+        <picture>
+          <source type="image/webp" srcset="./static/hero/ania-nova-hero-911.webp 1x, ./static/hero/ania-nova-hero-1356.webp 1.5x, ./static/hero/ania-nova-hero-1706.webp 2x" />
+          <img class="hero-image" src="./static/hero/ania-nova-hero-911.webp" alt="" />
+        </picture>
+      </section>
+
+      <section id="business-card">
+        <h1>ANIA NOVA</h1>
+        <div style="text-align: center; width: 100%">
+          <p>International actress</p>
+          <p style="text-decoration: underline"><a href="./static/Ania%20Nova%20CV.pdf" target="_blank"> View full CV</a></p>
+        </div>
+
+        <article id="icons-rename-mf" class="footer-outer" style="background-color: white; width: 25%">
+          <div class="footer-inner">
+            <div class="horizontal-divider-for-footer-icons">
+              <div class="icon-round-container">
+                <a href="https://www.imdb.com/name/nm7837597/" target="_blank"><img class="icon-round" src="./static/imdb.svg" alt="something" /></a>
+              </div>
+              <div class="icon-round-container">
+                <a href="https://www.instagram.com/ania__nova/" target="_blank"><img class="icon-round" src="./static/instagram.svg" alt="something" /></a>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section id="showreel">
+        <h2>Showreel</h2>
+
+        <vimeo-embed class="yt-video-sizing">
+          <img id="vthum-showreel" loading="lazy" src="https://vumbnail.com/894438444.jpg" alt="Video Description" />
+          <iframe allowfullscreen data-src="https://player.vimeo.com/video/939138872?autoplay=1" title=""></iframe>
+          <button id="vbtn-showreel" class="btn--video" aria-label="Play video" onclick="hideVideoButtonAndThumbnail('vbtn-showreel', 'vthum-showreel')"></button>
+        </vimeo-embed>
+      </section>
+
+      <section id="filmography">
+        <h2>Filmography</h2>
+        <div class="horizontal-divider grid-container">
+          <a class="poster--a" href="https://imdb.com/title/tt15835240" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/01 Panic attacks.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://imdb.com/title/tt16303630" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/01 Headhunters.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://imdb.com/title/tt7875794" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/02%20Wisting.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://imdb.com/title/tt5715066" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/04%20Mortal.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://imdb.com/title/tt9715964" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/05%20Deny.jpg" alt="" />
+          </a>
+
+        </div>
+      
+        <div class="horizontal-divider grid-container display-none" id="hide-me">
+          <a class="poster--a" href="https://www.imdb.com/title/tt4192998" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/06%20Okkupert.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://www.imdb.com/title/tt13397550" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/07%20Hate%20Speech.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://www.imdb.com/title/tt7510948" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/08%20Melk.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://www.imdb.com/title/tt8201154" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/09%20Special%20Delivery.jpg" alt="" />
+          </a>
+          <a class="poster--a" href="https://www.imdb.com/title/tt11131110" target="_blank">
+            <img class="poster--img" src="./static/IMDB_posters/10%20Culture.jpg" alt="" />
+          </a>
+        </div>
+      
+        <p id="toggle"><a href="#" onclick="showhide('hide-me', 'toggle', event)">View more</a></p>
+      </section>
+      
+    
+    
+
+      <section>
+        <h2>Gallery</h2>
+        <div id="gallery">
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2001.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2002.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2003.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2004.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2005.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2006.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2007.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2008.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2009.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2010.webp" />
+          <img class="gallery-image" src="./static/gallery_photos/Ania%20Nova%20gallery%2011.webp" />
+        </div>
+        <div class="lightbox">
+          <div class="filter"></div>
+          <div class="arrowr"></div>
+          <div class="arrowl"></div>
+          <div class="close"></div>
+        </div>
+      </section>
+
+      <section id="videos">
+        <h2>Videos</h2>
+        <div class="horizontal-divider">
+          <youtube-embed class="yt-video-sizing">
+            <img id="vthum-1" loading="lazy" src="https://vumbnail.com/YBgS_RrrnTM.jpg" alt="Video Description" />
+            <iframe allowfullscreen data-src="https://www.youtube.com/embed/YBgS_RrrnTM?autoplay=1" title=""></iframe>
+            <button id="vbtn-1" class="btn--video" aria-label="Play video" onclick="hideVideoButtonAndThumbnail('vbtn-1', 'vthum-1')"></button>
+          </youtube-embed>
+          <youtube-embed class="yt-video-sizing">
+            <img id="vthum-2" loading="lazy" src="https://vumbnail.com/tJCIrA6wnP8.jpg" alt="Video Description" />
+            <iframe allowfullscreen data-src="https://www.youtube.com/embed/tJCIrA6wnP8?autoplay=1" title=""></iframe>
+            <button id="vbtn-2" class="btn--video" aria-label="Play video" onclick="hideVideoButtonAndThumbnail('vbtn-2', 'vthum-2')"></button>
+          </youtube-embed>
+        </div>
+        <div class="horizontal-divider">
+          <youtube-embed class="yt-video-sizing">
+            <img id="vthum-3" loading="lazy" src="https://vumbnail.com/aD2Xcx1De3Y.jpg" alt="Video Description" />
+            <iframe allowfullscreen data-src="https://www.youtube.com/embed/aD2Xcx1De3Y?autoplay=1" title=""></iframe>
+            <button id="vbtn-3" class="btn--video" aria-label="Play video" onclick="hideVideoButtonAndThumbnail('vbtn-3', 'vthum-3')"></button>
+          </youtube-embed>
+          <vimeo-embed class="yt-video-sizing">
+            <img id="vthum-4" loading="lazy" src="https://vumbnail.com/377251531.jpg" alt="Video Description" />
+            <iframe allowfullscreen data-src="https://player.vimeo.com/video/377251531?autoplay=1" title=""></iframe>
+            <button id="vbtn-4" class="btn--video" aria-label="Play video" onclick="hideVideoButtonAndThumbnail('vbtn-4', 'vthum-4')"></button>
+          </vimeo-embed>
+        </div>
+      </section>
+
+      <section id="press" class="press-gallery">
+        <h2>Press</h2>
+        <div class="gallery-container">
+          <div class="column">
+            <a href="https://apple.news/AExZWTBQUTXGRro47r0AOOw" target="_blank">
+              <img src="./static/press/press - 1.jpg" alt="Press Image 1" />
+            </a>
+            <a href="https://universalcinema.ca/deny-everything-review-of-alioune-binates-short-deny" target="_blank">
+              <img src="./static/press/press - 3.jpg" alt="Press Image 3" />
+            </a>
+            <a href="https://www.dailybloid.com/news/interview-with-actress-ania-nova-new-movie" target="_blank">
+              <img src="./static/press/press - 5.jpg" alt="Press Image 5" />
+            </a>
+            <a href="https://www.instagram.com/p/C7FEp3TJ0QE/?hl=en" target="_blank">
+              <img src="./static/press/press - 7.jpg" alt="Press Image 7" />
+            </a>
+            <a href="https://youtu.be/ALDCPjLMymM?si=YzaLNOAe88WXepnW" target="_blank">
+              <img src="./static/press/press - 9.jpg" alt="Press Image 9" />
+            </a>
+            <a href="https://apple.news/AExZWTBQUTXGRro47r0AOOw" target="_blank">
+              <img src="./static/press/press - 0.jpg" alt="Press Image 0" />
+            </a>
+          </div>
+          <div class="column">
+            <a href="https://medium.com/@ragugini-francis/interview-with-actress-ania-nova-132566e0c3d3" target="_blank">
+              <img src="./static/press/press - 2.jpg" alt="Press Image 2" />
+            </a>
+            <a href="https://youtu.be/hZvH9u98zgw?si=ymjQbpvPQ9-geVkL" target="_blank">
+              <img src="./static/press/press - 4.jpg" alt="Press Image 4" />
+            </a>
+            <a href="https://apple.news/AExZWTBQUTXGRro47r0AOOw" target="_blank">
+              <img src="./static/press/press - 6.jpg" alt="Press Image 6" />
+            </a>
+            <a href="https://www.instagram.com/p/C7FEp3TJ0QE/?hl=en" target="_blank">
+              <img src="./static/press/press - 8.jpg" alt="Press Image 8" />
+            </a>
+            <a href="https://open.spotify.com/episode/42BMWOS7iEh6ePdpEwfuPN" target="_blank">
+              <img src="./static/press/press - 10.jpg" alt="Press Image 10" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p><a href="https://www.whiteflamingo.agency/actors/ania-nova" target="_blank">Represented by White Flamingo</a></p>
+        <p><a href="mailto:hi@whiteflamingo.agency">hi@whiteflamingo.agency</a></p>
+      </section>
+
+      <footer class="header-outer">
+        <div style="width: 50rem" class="footer-inner">
+          <div class="horizontal-divider">
+            <a class="footer-text" href="https://www.spotlight.com/0011-4532-8639" target="_blank">Spotlight</a>
+            <a class="footer-text" href="https://www.filmmakers.eu/actors/ania-nova" target="_blank">Filmmakers</a>
+            <a class="footer-text" href="https://casting.filmtoolz.ru/3342917" target="_blank">Filmtoolz</a>
+            <a class="footer-text" href="https://resumes.actorsaccess.com/ania-nova" target="_blank">Actors Access</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      // MOBILE TOPNAV
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+
+      // YOUTUBE AND VIMEO LAZY LOAD
+      document.querySelectorAll(":is(vimeo-embed, youtube-embed) button").forEach((button) =>
+        button.addEventListener("click", () => {
+          const video = button.previousElementSibling;
+          video.src = video.dataset.src;
+          // Hide the button and the thumbnail image
+          button.classList.add('hide-video-ui');
+          const img = video.previousElementSibling;
+          if (img && img.tagName === 'IMG') {
+            img.classList.add('hide-video-ui');
+          }
+        })
+      );
+
+      // Fix for inline onclick handlers
+      function hideVideoButtonAndThumbnail(btnId, imgId) {
+        var btn = document.getElementById(btnId);
+        var img = document.getElementById(imgId);
+        if (btn) btn.classList.add('hide-video-ui');
+        if (img) img.classList.add('hide-video-ui');
+        // Set iframe src to start playback
+        if (btn) {
+          var iframe = btn.previousElementSibling;
+          if (iframe && iframe.tagName === 'IFRAME' && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+          }
+        }
+      }
+
+      // SHOW AND HIDE ELEMENTS
+      function showhide(idone, idtwo, event) {
+    event.preventDefault(); // Prevent default anchor click behavior
+    const hideMe = document.getElementById(idone);
+    const toggle = document.getElementById(idtwo);
+    
+    if (hideMe.classList.contains("display-none")) {
+        hideMe.classList.remove("display-none");
+        toggle.innerHTML = 'View less'; // Change link text
+    } else {
+        hideMe.classList.add("display-none");
+        toggle.innerHTML = 'View more'; // Change link text back
+    }
+}
+
+
+      // MASONRY GALLERY
+
+      $(window).load(function () {
+        $(".gallery-image").click(function () {
+          $(".lightbox").fadeIn(300);
+          $(".lightbox").append("<img src='" + $(this).attr("src") + "' alt='" + $(this).attr("alt") + "' />");
+          $(".filter").css("background-image", "url(" + $(this).attr("src") + ")");
+          $("html").css("overflow", "hidden");
+          if ($(this).is(":last-child")) {
+            $(".arrowr").css("display", "none");
+            $(".arrowl").css("display", "block");
+          } else if ($(this).is(":first-child")) {
+            $(".arrowr").css("display", "block");
+            $(".arrowl").css("display", "none");
+          } else {
+            $(".arrowr").css("display", "block");
+            $(".arrowl").css("display", "block");
+          }
+        });
+
+        $(".close").click(function () {
+          $(".lightbox").fadeOut(300);
+          $("h1").remove();
+          $(".lightbox img").remove();
+          $("html").css("overflow", "auto");
+        });
+
+        $(document).keyup(function (e) {
+          if (e.keyCode == 27) {
+            $(".lightbox").fadeOut(300);
+            $(".lightbox img").remove();
+            $("html").css("overflow", "auto");
+          }
+        });
+
+        $(".arrowr").click(function () {
+          var imgSrc = $(".lightbox img").attr("src");
+          var search = $("#gallery").find("img[src$='" + imgSrc + "']");
+          var newImage = search.next().attr("src");
+          $(".lightbox img").attr("src", newImage);
+          $(".filter").css("background-image", "url(" + newImage + ")");
+
+          if (!search.next().is(":last-child")) {
+            $(".arrowl").css("display", "block");
+          } else {
+            $(".arrowr").css("display", "none");
+          }
+        });
+
+        $(".arrowl").click(function () {
+          var imgSrc = $(".lightbox img").attr("src");
+          var search = $("#gallery").find("img[src$='" + imgSrc + "']");
+          var newImage = search.prev().attr("src");
+          $(".lightbox img").attr("src", newImage);
+          $(".filter").css("background-image", "url(" + newImage + ")");
+
+          if (!search.prev().is(":first-child")) {
+            $(".arrowr").css("display", "block");
+          } else {
+            $(".arrowl").css("display", "none");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
