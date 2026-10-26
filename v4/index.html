@@ -143,15 +143,15 @@
               </div>
             </div>
             <p class="player__caption"><span class="player__label">Now showing</span><span class="player__title">Showreel</span></p>
-          </div>
 
-          <ul class="playlist">
-            <li><button class="playlist__item" type="button" data-vimeo="939138872" aria-current="true"><img loading="lazy" src="../static/video-thumbs/showreel-2024.webp" width="1280" height="719" alt="" /><span class="playlist__title">Showreel</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="2bJwreTFeQA"><img loading="lazy" src="../static/video-thumbs/about-me.webp" width="1280" height="720" alt="" /><span class="playlist__title">About Me, 2021</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="tJCIrA6wnP8"><img loading="lazy" src="../static/video-thumbs/the-interrogation-micromilspec.webp" width="1280" height="720" alt="" /><span class="playlist__title">The Interrogation, 2026</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="Y5tJ4EmpeKo"><img loading="lazy" src="../static/video-thumbs/stage-combat-scene.webp" width="1280" height="720" alt="" /><span class="playlist__title">Stage Combat, 2024</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="drlfmp7SKZI"><img loading="lazy" src="../static/video-thumbs/ania-nova-jack-gastelbondo.webp" width="960" height="540" alt="" /><span class="playlist__title">Los Angeles Reverie, 2019</span></button></li>
-          </ul>
+            <ul class="playlist">
+              <li><button class="playlist__item" type="button" data-vimeo="939138872" aria-current="true"><img loading="lazy" src="../static/video-thumbs/showreel-2024.webp" width="1280" height="719" alt="" /><span class="playlist__title">Showreel</span></button></li>
+              <li><button class="playlist__item" type="button" data-id="2bJwreTFeQA"><img loading="lazy" src="../static/video-thumbs/about-me.webp" width="1280" height="720" alt="" /><span class="playlist__title">About Me, 2021</span></button></li>
+              <li><button class="playlist__item" type="button" data-id="tJCIrA6wnP8"><img loading="lazy" src="../static/video-thumbs/the-interrogation-micromilspec.webp" width="1280" height="720" alt="" /><span class="playlist__title">The Interrogation, 2026</span></button></li>
+              <li><button class="playlist__item" type="button" data-id="Y5tJ4EmpeKo"><img loading="lazy" src="../static/video-thumbs/stage-combat-scene.webp" width="1280" height="720" alt="" /><span class="playlist__title">Stage Combat, 2024</span></button></li>
+              <li><button class="playlist__item" type="button" data-id="drlfmp7SKZI"><img loading="lazy" src="../static/video-thumbs/ania-nova-jack-gastelbondo.webp" width="960" height="540" alt="" /><span class="playlist__title">Los Angeles Reverie, 2019</span></button></li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -178,13 +178,8 @@
               <span class="film__award">
                 <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
                 <span>
-                  <span class="film__award-item">
-                    <span class="film__award-line">2023 Winner</span>
-                    <span class="film__award-line">Gullruten Awards</span>
-                  </span>
-                  <span class="film__award-item">
-                    <span class="film__award-line">Geneva International Film Festival</span>
-                  </span>
+                  <span class="film__award-line">2023 Winner</span>
+                  <span class="film__award-line">Gullruten Awards</span>
                 </span>
               </span>
             </a>
@@ -195,14 +190,8 @@
               <span class="film__award">
                 <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
                 <span>
-                  <span class="film__award-item">
-                    <span class="film__award-line">2022 Nominee</span>
-                    <span class="film__award-line">Gullruten Awards</span>
-                  </span>
-                  <span class="film__award-item">
-                    <span class="film__award-line">Nominee</span>
-                    <span class="film__award-line">Edgar Award</span>
-                  </span>
+                  <span class="film__award-line">2022 Nominee</span>
+                  <span class="film__award-line">Gullruten Awards</span>
                 </span>
               </span>
             </a>
@@ -349,6 +338,9 @@
           <button class="gallery__item" type="button" style="--i:19"><img loading="lazy" src="../static/gallery/ania-nova-vgtv-av-med-maska.webp" width="1252" height="1247" alt="Ania Nova on VGTV's Av med maska" /></button>
           <button class="gallery__item" type="button" style="--i:20"><img loading="lazy" src="../static/gallery/ania-nova-portrait-grey-coat.webp" width="1506" height="2000" alt="Ania Nova portrait in a grey wool coat" /></button>
         </div>
+        <div class="gallery__more-wrap">
+          <button class="btn btn--ghost gallery__more" type="button" hidden>Show all photos</button>
+        </div>
 
         <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
           <div class="lightbox__backdrop"></div>
@@ -363,11 +355,6 @@
       <section id="press" data-reveal>
         <div class="container">
           <h2 class="section-title">Press</h2>
-
-          <figure class="quote quote--large">
-            <blockquote>“As an actor you become more of a filmmaker. You get to create your own projects and take that active part in your career.”</blockquote>
-            <figcaption>Ania Nova, Dailybloid interview</figcaption>
-          </figure>
 
           <div class="press-grid">
             <a class="press-card" style="--i:0" href="https://youtu.be/fmO-G7zs9oo?si=vs5V2o1WpwucRNjw" target="_blank" rel="noopener noreferrer">
@@ -420,10 +407,9 @@
             </a>
           </div>
 
-          <!-- Kirk Baltz quote — parked in Press for now (was in About) -->
           <figure class="quote">
-            <blockquote>“Act for yourself, forget the audience. If you have fun, they will have fun.”</blockquote>
-            <figcaption>Kirk Baltz, acting teacher</figcaption>
+            <blockquote>“The work of art is you.”</blockquote>
+            <figcaption>Ania Nova</figcaption>
           </figure>
         </div>
       </section>
@@ -441,8 +427,6 @@
       <div class="container">
         <p class="site-footer__brand">Ania Nova</p>
         <nav class="site-footer__links" aria-label="Profiles">
-          <a href="https://www.imdb.com/name/nm7837597/" target="_blank" rel="noopener noreferrer">IMDb</a>
-          <a href="https://www.instagram.com/ania__nova/" target="_blank" rel="noopener noreferrer">Instagram</a>
           <a href="https://www.spotlight.com/0011-4532-8639" target="_blank" rel="noopener noreferrer">Spotlight</a>
           <a href="https://www.filmmakers.eu/actors/ania-nova" target="_blank" rel="noopener noreferrer">Filmmakers</a>
           <a href="https://casting.filmtoolz.ru/3342917" target="_blank" rel="noopener noreferrer">Filmtoolz</a>

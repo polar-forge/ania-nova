@@ -32,6 +32,7 @@
   --nav-h: 6rem;
   --content: 112rem;
   --gutter: clamp(1.6rem, 4vw, 3rem);
+  --grid-gap: 1.6rem; /* between cards in the filmography, gallery and press */
   --font-serif: "Antic Didone", "Georgia", serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -96,6 +97,10 @@ img {
   height: auto;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -142,7 +147,7 @@ p {
 
 section {
   position: relative;
-  padding-block: clamp(7rem, 12vh, 11rem);
+  padding-block: clamp(4.4rem, 5.5vw, 7.2rem);
 }
 
 .container {
@@ -539,13 +544,13 @@ iframe.hero-video {
   justify-content: center;
   gap: clamp(1.6rem, 3vw, 3rem);
   font-family: var(--font-serif);
-  font-size: clamp(3.4rem, 6vw, 5.6rem);
+  font-size: clamp(2.8rem, 4.5vw, 4.2rem);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-align: center;
-  margin: 0 0 clamp(4rem, 6vw, 6rem);
+  margin: 0 0 clamp(2.8rem, 4vw, 4.4rem);
 }
 
 .section-title::before,
@@ -560,7 +565,7 @@ iframe.hero-video {
 /* ---------- ABOUT ---------- */
 
 #about {
-  padding-top: clamp(5rem, 8vh, 7rem);
+  padding-top: clamp(3.2rem, 4vw, 5rem);
 }
 
 .bio-text {
@@ -586,7 +591,7 @@ iframe.hero-video {
 
 .quote {
   max-width: 76rem;
-  margin: clamp(6rem, 9vw, 9rem) auto 0;
+  margin: clamp(4rem, 6vw, 6.4rem) auto 0;
   text-align: center;
 }
 
@@ -594,7 +599,7 @@ iframe.hero-video {
   margin: 0;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-size: clamp(2.4rem, 3.4vw, 3.4rem);
+  font-size: clamp(2rem, 2.4vw, 2.6rem);
   line-height: 1.35;
   letter-spacing: 0.005em;
   color: var(--ink);
@@ -602,7 +607,7 @@ iframe.hero-video {
 
 .quote figcaption {
   margin-top: 2rem;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -611,14 +616,6 @@ iframe.hero-video {
 
 .quote figcaption::before {
   content: "— ";
-}
-
-.quote--large {
-  margin: 0 auto clamp(5rem, 8vw, 8rem);
-}
-
-.quote--large blockquote {
-  font-size: clamp(2.6rem, 4.2vw, 4.4rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -726,10 +723,16 @@ iframe.hero-video {
   100% { transform: scale(1.5); opacity: 0; }
 }
 
+/* Inset between the viewfinder corners and the video; the caption and
+   playlist share it so they line up with the video, not the corners */
+.player {
+  --reel-pad: clamp(1.2rem, 2vw, 2rem);
+}
+
 /* Showreel letterbox frame with viewfinder corners */
 .reel-frame {
   position: relative;
-  padding: clamp(1.2rem, 2vw, 2rem);
+  padding: var(--reel-pad);
   background:
     linear-gradient(var(--gold), var(--gold)) top left / 2.4rem 1px,
     linear-gradient(var(--gold), var(--gold)) top left / 1px 2.4rem,
@@ -742,30 +745,23 @@ iframe.hero-video {
   background-repeat: no-repeat;
 }
 
-/* ---------- FILMOGRAPHY (masonry) ---------- */
+/* ---------- FILMOGRAPHY (aligned poster grid) ---------- */
 
+/* 12 titles fill every row at 4 and 3 columns. Each card spans four subgrid
+   rows (poster, title, credit, awards), so across a row the titles, credits
+   and award rules all start on the same line however long the awards run. */
 .film-grid {
-  columns: 5;
-  column-gap: clamp(1.2rem, 2vw, 2rem);
-}
-
-.film-grid.is-masonry {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(1.2rem, 2vw, 2rem);
-  columns: auto;
-}
-
-.film-col {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  gap: clamp(2.4rem, 3vw, 3.2rem);
-  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(3.2rem, 4vw, 4.8rem) var(--grid-gap);
 }
 
 .film {
-  break-inside: avoid;
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  align-content: start;
   min-width: 0;
 }
 
@@ -775,7 +771,8 @@ iframe.hero-video {
   margin-top: 1rem;
   padding-top: 0.9rem;
   border-top: 1px solid var(--hairline);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
+  font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.06em;
   color: var(--gold);
@@ -835,7 +832,7 @@ iframe.hero-video {
 .film__meta {
   display: block;
   margin-top: 0.4rem;
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -846,7 +843,7 @@ iframe.hero-video {
 
 .gallery {
   columns: 3;
-  column-gap: 1.4rem;
+  column-gap: var(--grid-gap);
   max-width: calc(140rem + 2 * var(--gutter));
   margin-inline: auto;
   padding-inline: var(--gutter);
@@ -856,7 +853,7 @@ iframe.hero-video {
 .gallery.is-masonry {
   display: flex;
   align-items: flex-start;
-  gap: 1.4rem;
+  gap: var(--grid-gap);
   columns: auto;
 }
 
@@ -864,7 +861,7 @@ iframe.hero-video {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: var(--grid-gap);
   min-width: 0;
 }
 
@@ -876,7 +873,7 @@ iframe.hero-video {
   display: block;
   width: 100%;
   padding: 0;
-  margin: 0 0 1.4rem;
+  margin: 0 0 var(--grid-gap);
   border: 0;
   background: none;
   border-radius: var(--radius);
@@ -915,6 +912,16 @@ iframe.hero-video {
 .gallery__item:hover img {
   transform: scale(1.04);
   filter: brightness(1.06);
+}
+
+.gallery__more-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 3.2rem var(--gutter) 0;
+}
+
+.gallery__more-wrap:has(.gallery__more[hidden]) {
+  display: none;
 }
 
 /* ---------- LIGHTBOX ---------- */
@@ -1050,10 +1057,11 @@ iframe.hero-video {
   flex-wrap: wrap;
   gap: 0.4rem 1.6rem;
   margin-top: 1.8rem;
+  padding-inline: var(--reel-pad);
 }
 
 .player__label {
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -1069,9 +1077,9 @@ iframe.hero-video {
 .playlist {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 2.4rem 1.6rem;
+  gap: 2.4rem var(--grid-gap);
   list-style: none;
-  padding: 0;
+  padding: 0 var(--reel-pad);
   margin: 4rem 0 0;
 }
 
@@ -1123,12 +1131,32 @@ iframe.hero-video {
 
 .press-grid {
   columns: 3;
-  column-gap: 1.6rem;
+  column-gap: var(--grid-gap);
+}
+
+/* JS-built balanced columns, as in the gallery */
+.press-grid.is-masonry {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--grid-gap);
+  columns: auto;
+}
+
+.press-col {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--grid-gap);
+  min-width: 0;
+}
+
+.press-grid.is-masonry .press-card {
+  margin: 0;
 }
 
 .press-card {
   display: block;
-  margin-bottom: 1.6rem;
+  margin-bottom: var(--grid-gap);
   break-inside: avoid;
   background: var(--bg-card);
   border: 1px solid var(--hairline);
@@ -1153,7 +1181,7 @@ iframe.hero-video {
 
 .press-card__outlet {
   display: block;
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -1201,14 +1229,14 @@ iframe.hero-video {
 
 #contact {
   text-align: center;
-  padding-bottom: clamp(9rem, 14vh, 13rem);
+  padding-bottom: clamp(6rem, 8vw, 9.6rem);
 }
 
 .contact__agency {
   display: inline-block;
   margin-top: 1.4rem;
   font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 5vw, 4.6rem);
+  font-size: clamp(2.2rem, 3vw, 3rem);
   line-height: 1.2;
   letter-spacing: 0.04em;
   background: linear-gradient(var(--gold), var(--gold)) left bottom / 0 1px no-repeat;
@@ -1364,10 +1392,6 @@ html.lightbox-open .to-top {
 /* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 1100px) {
-  .film-grid {
-    columns: 4;
-  }
-
   .nav a {
     font-size: 1.55rem;
     letter-spacing: 0.1em;
@@ -1388,10 +1412,27 @@ html.lightbox-open .to-top {
     columns: 2;
   }
 
-  /* Playlist becomes a swipeable rail */
-  .playlist {
+  .film-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --grid-gap: 1rem;
+  }
+
+  .gallery {
+    columns: 2;
+  }
+
+  /* Phones: the playlist, filmography and press become swipe rails */
+  .playlist,
+  .film-grid,
+  .press-grid {
     display: flex;
-    gap: 1.4rem;
+    align-items: flex-start;
+    gap: var(--grid-gap);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     margin-inline: calc(-1 * var(--gutter));
@@ -1400,36 +1441,36 @@ html.lightbox-open .to-top {
     scrollbar-width: none;
   }
 
-  .playlist::-webkit-scrollbar {
+  :is(.playlist, .film-grid, .press-grid)::-webkit-scrollbar {
     display: none;
   }
 
-  .playlist li {
-    flex: 0 0 min(64vw, 30rem);
+  .playlist > li,
+  .film-grid > .film,
+  .press-grid > .press-card {
+    flex: 0 0 var(--rail-item);
+    margin: 0;
     scroll-snap-align: start;
   }
 
+  .playlist {
+    --rail-item: min(64vw, 30rem);
+    padding-inline: calc(var(--gutter) + var(--reel-pad));
+    scroll-padding-inline: calc(var(--gutter) + var(--reel-pad));
+  }
+
+  /* Still a grid, flowing sideways, so the cards keep their aligned rows */
   .film-grid {
-    columns: 3;
-  }
-}
-
-@media (max-width: 768px) {
-  .gallery {
-    columns: 2;
-    column-gap: 1rem;
+    --rail-item: min(44vw, 20rem);
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: var(--rail-item);
+    grid-template-columns: none;
+    grid-template-rows: repeat(4, auto);
   }
 
-  .gallery__item {
-    margin-bottom: 1rem;
-  }
-
-  .gallery.is-masonry {
-    gap: 1rem;
-  }
-
-  .gallery.is-masonry .gallery__col {
-    gap: 1rem;
+  .press-grid {
+    --rail-item: min(72vw, 32rem);
   }
 
   .hero-card h1 {
@@ -1452,16 +1493,6 @@ html.lightbox-open .to-top {
 
   .lightbox__stage {
     padding: 6.4rem 1.2rem;
-  }
-}
-
-@media (max-width: 560px) {
-  .press-grid {
-    columns: 1;
-  }
-
-  .film-grid {
-    columns: 2;
   }
 }
 

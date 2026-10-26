@@ -170,255 +170,253 @@
     });
   })();
 
-  // FILMOGRAPHY — masonry columns so longer credit/award lines flow evenly
-  (function () {
-    var grid = document.querySelector(".film-grid");
-    if (!grid) return;
-    var films = Array.prototype.slice.call(grid.querySelectorAll(".film"));
-    if (!films.length) return;
-    var builtCols = 0;
+  // BALANCED COLUMNS — shared by the gallery and press collages. Splits items
+  // into columns of near-equal height regardless of their order: tallest-first
+  // into the shortest column, then keep moving or swapping items between pairs
+  // of columns while that narrows the gap. Each column keeps the curated order,
+  // and the column holding the first item goes on the left.
+  function balanceColumns(sizes, count) {
+    var columns = [];
+    for (var c = 0; c < count; c++) columns.push({ members: [], height: 0 });
 
-    function colsForWidth() {
-      if (window.innerWidth <= 560) return 2;
-      if (window.innerWidth <= 880) return 3;
-      if (window.innerWidth <= 1180) return 4;
-      return 5;
-    }
-
-    function build(force) {
-      var count = colsForWidth();
-      if (!force && count === builtCols) return;
-      builtCols = count;
-
-      while (grid.firstChild) grid.removeChild(grid.firstChild);
-
-      var cols = [];
-      for (var i = 0; i < count; i++) {
-        var col = document.createElement("div");
-        col.className = "film-col";
-        grid.appendChild(col);
-        cols.push({ el: col, h: 0 });
-      }
-
-      films.forEach(function (film) {
-        var target = cols[0];
-        cols.forEach(function (c) {
-          if (c.h < target.h) target = c;
+    sizes
+      .map(function (_, i) {
+        return i;
+      })
+      .sort(function (a, b) {
+        return sizes[b] - sizes[a];
+      })
+      .forEach(function (i) {
+        var shortest = columns[0];
+        columns.forEach(function (col) {
+          if (col.height < shortest.height) shortest = col;
         });
-        target.el.appendChild(film);
-        target.h += film.offsetHeight;
+        shortest.members.push(i);
+        shortest.height += sizes[i];
       });
 
-      grid.classList.add("is-masonry");
-    }
-
-    build(false);
-
-    // Re-arm native lazy loading after the nodes move between columns.
-    if ("IntersectionObserver" in window) {
-      var filmLoader = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            var img = entry.target.querySelector("img");
-            if (img) img.loading = "eager";
-            filmLoader.unobserve(entry.target);
-          });
-        },
-        { rootMargin: "600px 0px" }
-      );
-      films.forEach(function (film) {
-        filmLoader.observe(film);
-      });
-    } else {
-      films.forEach(function (film) {
-        var img = film.querySelector("img");
-        if (img) img.loading = "eager";
-      });
-    }
-
-    window.addEventListener("load", function () {
-      build(true);
-    });
-
-    var resizeTimer;
-    window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        build(true);
-      }, 150);
-    });
-  })();
-
-  // GALLERY LAYOUT — explicit columns with real gaps. CSS multicol truncates
-  // the bottom margin at column breaks, which left uneven spacing.
-  (function () {
-    var gallery = document.querySelector(".gallery");
-    if (!gallery) return;
-    var items = Array.prototype.slice.call(gallery.querySelectorAll(".gallery__item"));
-    if (!items.length) return;
-
-    items.forEach(function (el, i) {
-      el.setAttribute("data-order", String(i));
-    });
-
-    // Height of each photo per unit of column width
-    var ratios = items.map(function (item) {
-      var img = item.querySelector("img");
-      var w = parseFloat(img.getAttribute("width")) || 1;
-      var h = parseFloat(img.getAttribute("height")) || 1;
-      return h / w;
-    });
-
-    var builtCols = 0;
-
-    function columnsForWidth() {
-      return window.innerWidth <= 768 ? 2 : 3;
-    }
-
-    // Split the photos into columns of near-equal height, regardless of their
-    // order: tallest-first into the shortest column, then keep moving or
-    // swapping photos between pairs of columns while that narrows the gap.
-    function balance(count, gap) {
-      var cost = ratios.map(function (r) {
-        return r + gap;
-      });
-      var columns = [];
-      for (var c = 0; c < count; c++) columns.push({ members: [], height: 0 });
-
-      cost
-        .map(function (_, i) {
-          return i;
-        })
-        .sort(function (a, b) {
-          return cost[b] - cost[a];
-        })
-        .forEach(function (i) {
-          var shortest = columns[0];
-          columns.forEach(function (col) {
-            if (col.height < shortest.height) shortest = col;
-          });
-          shortest.members.push(i);
-          shortest.height += cost[i];
-        });
-
-      function improvePair(tall, short) {
-        var diff = tall.height - short.height;
-        var best = diff - 1e-9;
-        var pick = null;
-        tall.members.forEach(function (i) {
-          var moved = Math.abs(diff - 2 * cost[i]);
-          if (moved < best) {
-            best = moved;
-            pick = [i, -1];
-          }
-          short.members.forEach(function (j) {
-            var swapped = Math.abs(diff - 2 * (cost[i] - cost[j]));
-            if (swapped < best) {
-              best = swapped;
-              pick = [i, j];
-            }
-          });
-        });
-        if (!pick) return false;
-        var i = pick[0];
-        var j = pick[1];
-        tall.members.splice(tall.members.indexOf(i), 1);
-        short.members.push(i);
-        tall.height -= cost[i];
-        short.height += cost[i];
-        if (j !== -1) {
-          short.members.splice(short.members.indexOf(j), 1);
-          tall.members.push(j);
-          short.height -= cost[j];
-          tall.height += cost[j];
+    function improvePair(tall, short) {
+      var diff = tall.height - short.height;
+      var best = diff - 1e-9;
+      var pick = null;
+      tall.members.forEach(function (i) {
+        var moved = Math.abs(diff - 2 * sizes[i]);
+        if (moved < best) {
+          best = moved;
+          pick = [i, -1];
         }
-        return true;
-      }
-
-      var improved = true;
-      while (improved) {
-        improved = false;
-        for (var a = 0; a < count; a++) {
-          for (var b = a + 1; b < count; b++) {
-            var tall = columns[a].height >= columns[b].height ? columns[a] : columns[b];
-            var short = tall === columns[a] ? columns[b] : columns[a];
-            if (improvePair(tall, short)) improved = true;
+        short.members.forEach(function (j) {
+          var swapped = Math.abs(diff - 2 * (sizes[i] - sizes[j]));
+          if (swapped < best) {
+            best = swapped;
+            pick = [i, j];
           }
+        });
+      });
+      if (!pick) return false;
+      var i = pick[0];
+      var j = pick[1];
+      tall.members.splice(tall.members.indexOf(i), 1);
+      short.members.push(i);
+      tall.height -= sizes[i];
+      short.height += sizes[i];
+      if (j !== -1) {
+        short.members.splice(short.members.indexOf(j), 1);
+        tall.members.push(j);
+        short.height -= sizes[j];
+        tall.height += sizes[j];
+      }
+      return true;
+    }
+
+    var improved = true;
+    while (improved) {
+      improved = false;
+      for (var a = 0; a < count; a++) {
+        for (var b = a + 1; b < count; b++) {
+          var tall = columns[a].height >= columns[b].height ? columns[a] : columns[b];
+          var short = tall === columns[a] ? columns[b] : columns[a];
+          if (improvePair(tall, short)) improved = true;
         }
       }
-
-      // Keep the curated order within each column, and put the column holding
-      // the first photo on the left.
-      columns.forEach(function (col) {
-        col.members.sort(function (x, y) {
-          return x - y;
-        });
-      });
-      columns.sort(function (x, y) {
-        return x.members[0] - y.members[0];
-      });
-      return columns;
     }
 
-    function build() {
-      var count = columnsForWidth();
-      if (count === builtCols) return;
-      builtCols = count;
-
-      while (gallery.firstChild) gallery.removeChild(gallery.firstChild);
-      gallery.classList.add("is-masonry");
-
-      var cols = [];
-      for (var c = 0; c < count; c++) {
-        var col = document.createElement("div");
-        col.className = "gallery__col";
-        gallery.appendChild(col);
-        cols.push(col);
-      }
-
-      // The row gap adds a fixed height per photo; express it in column widths.
-      var colWidth = cols[0].getBoundingClientRect().width;
-      var gap = colWidth ? (parseFloat(getComputedStyle(cols[0]).rowGap) || 0) / colWidth : 0;
-
-      balance(count, gap).forEach(function (col, c) {
-        col.members.forEach(function (i) {
-          cols[c].appendChild(items[i]);
-        });
+    columns.forEach(function (col) {
+      col.members.sort(function (x, y) {
+        return x - y;
       });
-    }
+    });
+    columns.sort(function (x, y) {
+      return x.members[0] - y.members[0];
+    });
+    return columns;
+  }
 
-    build();
-
-    // Re-arm native lazy loading: moving the nodes into new columns can leave
-    // <img loading="lazy"> without an intersection update, so they never fetch.
-    if ("IntersectionObserver" in window) {
-      var imgLoader = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (!entry.isIntersecting) return;
-            var img = entry.target.querySelector("img");
-            if (img) img.loading = "eager";
-            imgLoader.unobserve(entry.target);
-          });
-        },
-        { rootMargin: "800px 0px" }
-      );
-      items.forEach(function (item) {
-        imgLoader.observe(item);
-      });
-    } else {
+  // Moving <img loading="lazy"> nodes between columns can leave them without an
+  // intersection update, so they never fetch; load them as they come near.
+  function rearmLazyImages(items) {
+    if (!("IntersectionObserver" in window)) {
       items.forEach(function (item) {
         var img = item.querySelector("img");
         if (img) img.loading = "eager";
       });
+      return;
     }
+    var loader = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var img = entry.target.querySelector("img");
+          if (img) img.loading = "eager";
+          loader.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "800px 0px" }
+    );
+    items.forEach(function (item) {
+      loader.observe(item);
+    });
+  }
+
+  // Collage layout as explicit flex columns: real gaps, unlike CSS multicol,
+  // which truncates margins at column breaks. With 0 columns the items go back
+  // into the container in order (a swipe rail on phones). Items past `limit`
+  // stay in the DOM but hidden, so the lightbox can still reach them.
+  function masonry(grid, options) {
+    var items = Array.prototype.slice.call(grid.querySelectorAll(options.item));
+    if (!items.length) return null;
+    var built = "";
+
+    function build(force) {
+      var count = options.columns();
+      var limit = options.limit ? options.limit() : items.length;
+      var key = count + "/" + limit;
+      if (!force && key === built) return;
+      built = key;
+
+      var shown = items.slice(0, limit);
+      items.forEach(function (item, i) {
+        item.hidden = i >= limit;
+      });
+      while (grid.firstChild) grid.removeChild(grid.firstChild);
+      grid.classList.toggle("is-masonry", count > 0);
+
+      if (!count) {
+        items.forEach(function (item) {
+          grid.appendChild(item);
+        });
+      } else {
+        var cols = [];
+        for (var c = 0; c < count; c++) {
+          var col = document.createElement("div");
+          col.className = options.colClass;
+          grid.appendChild(col);
+          cols.push(col);
+        }
+        var gap = parseFloat(getComputedStyle(cols[0]).rowGap) || 0;
+        var sizes = options.measure(shown, cols[0]).map(function (h) {
+          return h + gap;
+        });
+        balanceColumns(sizes, count).forEach(function (col, c) {
+          col.members.forEach(function (i) {
+            cols[c].appendChild(shown[i]);
+          });
+        });
+        items.slice(limit).forEach(function (item) {
+          cols[count - 1].appendChild(item);
+        });
+      }
+      if (options.onBuild) options.onBuild(shown.length, items.length);
+    }
+
+    build(true);
+    rearmLazyImages(items);
 
     var resizeTimer;
     window.addEventListener("resize", function () {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(build, 150);
     });
+    return { build: build };
+  }
+
+  // GALLERY — balanced photo columns; phones preview the first photos until "Show all"
+  (function () {
+    var gallery = document.querySelector(".gallery");
+    if (!gallery) return;
+    var more = document.querySelector(".gallery__more");
+    var expanded = false;
+    var PREVIEW = 8;
+
+    gallery.querySelectorAll(".gallery__item").forEach(function (el, i) {
+      el.setAttribute("data-order", String(i));
+    });
+
+    function phone() {
+      return window.innerWidth <= 768;
+    }
+
+    var layout = masonry(gallery, {
+      item: ".gallery__item",
+      colClass: "gallery__col",
+      columns: function () {
+        return phone() ? 2 : 3;
+      },
+      limit: function () {
+        return phone() && !expanded ? PREVIEW : Infinity;
+      },
+      // Photos are sized from their width/height attributes, before they load
+      measure: function (shown, col) {
+        var width = col.getBoundingClientRect().width;
+        return shown.map(function (item) {
+          var img = item.querySelector("img");
+          var w = parseFloat(img.getAttribute("width")) || 1;
+          var h = parseFloat(img.getAttribute("height")) || 1;
+          return (h / w) * width;
+        });
+      },
+      onBuild: function (shown, total) {
+        if (more) more.hidden = shown >= total;
+      }
+    });
+
+    if (layout && more) {
+      more.addEventListener("click", function () {
+        expanded = true;
+        layout.build();
+      });
+    }
+  })();
+
+  // PRESS — balanced card columns; a swipe rail on phones
+  (function () {
+    var grid = document.querySelector(".press-grid");
+    if (!grid) return;
+
+    var layout = masonry(grid, {
+      item: ".press-card",
+      colClass: "press-col",
+      columns: function () {
+        if (window.innerWidth <= 768) return 0;
+        return window.innerWidth <= 960 ? 2 : 3;
+      },
+      // Cards carry text too, so measure them at the real column width
+      measure: function (shown, col) {
+        shown.forEach(function (card) {
+          col.appendChild(card);
+        });
+        return shown.map(function (card) {
+          return card.offsetHeight;
+        });
+      }
+    });
+
+    // Label heights shift once the web fonts arrive; balance again then.
+    if (layout && document.fonts) {
+      document.fonts.ready.then(function () {
+        layout.build(true);
+      });
+    }
   })();
 
   // GALLERY LIGHTBOX — swipe, keyboard, counter, preload
