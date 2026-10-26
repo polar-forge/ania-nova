@@ -126,13 +126,7 @@
     container.classList.add("is-playing");
   }
 
-  document.querySelectorAll("[data-embed]").forEach(function (el) {
-    el.querySelector(".play").addEventListener("click", function () {
-      mountIframe(el, el.dataset.embed, el.dataset.title);
-    });
-  });
-
-  // VIDEO PLAYER + PLAYLIST
+  // SHOWREEL PLAYER + PLAYLIST — one screen; picking a video replaces whatever is playing
   (function () {
     var screen = document.querySelector(".player__screen");
     if (!screen) return;
@@ -142,8 +136,9 @@
     var items = Array.prototype.slice.call(document.querySelectorAll(".playlist__item"));
     var current = items[0];
 
-    function ytSrc(id) {
-      return "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+    function embedSrc(item) {
+      if (item.dataset.vimeo) return "https://player.vimeo.com/video/" + item.dataset.vimeo + "?autoplay=1";
+      return "https://www.youtube-nocookie.com/embed/" + item.dataset.id + "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
     }
 
     function select(item, autoplay) {
@@ -158,7 +153,7 @@
       var old = screen.querySelector("iframe");
       if (old) old.remove();
       screen.classList.remove("is-playing");
-      if (autoplay) mountIframe(screen, ytSrc(item.dataset.id), "Ania Nova — " + title);
+      if (autoplay) mountIframe(screen, embedSrc(item), "Ania Nova — " + title);
     }
 
     playBtn.addEventListener("click", function () {
@@ -268,10 +263,103 @@
       el.setAttribute("data-order", String(i));
     });
 
+    // Height of each photo per unit of column width
+    var ratios = items.map(function (item) {
+      var img = item.querySelector("img");
+      var w = parseFloat(img.getAttribute("width")) || 1;
+      var h = parseFloat(img.getAttribute("height")) || 1;
+      return h / w;
+    });
+
     var builtCols = 0;
 
     function columnsForWidth() {
       return window.innerWidth <= 768 ? 2 : 3;
+    }
+
+    // Split the photos into columns of near-equal height, regardless of their
+    // order: tallest-first into the shortest column, then keep moving or
+    // swapping photos between pairs of columns while that narrows the gap.
+    function balance(count, gap) {
+      var cost = ratios.map(function (r) {
+        return r + gap;
+      });
+      var columns = [];
+      for (var c = 0; c < count; c++) columns.push({ members: [], height: 0 });
+
+      cost
+        .map(function (_, i) {
+          return i;
+        })
+        .sort(function (a, b) {
+          return cost[b] - cost[a];
+        })
+        .forEach(function (i) {
+          var shortest = columns[0];
+          columns.forEach(function (col) {
+            if (col.height < shortest.height) shortest = col;
+          });
+          shortest.members.push(i);
+          shortest.height += cost[i];
+        });
+
+      function improvePair(tall, short) {
+        var diff = tall.height - short.height;
+        var best = diff - 1e-9;
+        var pick = null;
+        tall.members.forEach(function (i) {
+          var moved = Math.abs(diff - 2 * cost[i]);
+          if (moved < best) {
+            best = moved;
+            pick = [i, -1];
+          }
+          short.members.forEach(function (j) {
+            var swapped = Math.abs(diff - 2 * (cost[i] - cost[j]));
+            if (swapped < best) {
+              best = swapped;
+              pick = [i, j];
+            }
+          });
+        });
+        if (!pick) return false;
+        var i = pick[0];
+        var j = pick[1];
+        tall.members.splice(tall.members.indexOf(i), 1);
+        short.members.push(i);
+        tall.height -= cost[i];
+        short.height += cost[i];
+        if (j !== -1) {
+          short.members.splice(short.members.indexOf(j), 1);
+          tall.members.push(j);
+          short.height -= cost[j];
+          tall.height += cost[j];
+        }
+        return true;
+      }
+
+      var improved = true;
+      while (improved) {
+        improved = false;
+        for (var a = 0; a < count; a++) {
+          for (var b = a + 1; b < count; b++) {
+            var tall = columns[a].height >= columns[b].height ? columns[a] : columns[b];
+            var short = tall === columns[a] ? columns[b] : columns[a];
+            if (improvePair(tall, short)) improved = true;
+          }
+        }
+      }
+
+      // Keep the curated order within each column, and put the column holding
+      // the first photo on the left.
+      columns.forEach(function (col) {
+        col.members.sort(function (x, y) {
+          return x - y;
+        });
+      });
+      columns.sort(function (x, y) {
+        return x.members[0] - y.members[0];
+      });
+      return columns;
     }
 
     function build() {
@@ -280,28 +368,25 @@
       builtCols = count;
 
       while (gallery.firstChild) gallery.removeChild(gallery.firstChild);
+      gallery.classList.add("is-masonry");
 
-      var columns = [];
+      var cols = [];
       for (var c = 0; c < count; c++) {
         var col = document.createElement("div");
         col.className = "gallery__col";
         gallery.appendChild(col);
-        columns.push({ el: col, height: 0 });
+        cols.push(col);
       }
 
-      items.forEach(function (item) {
-        var shortest = columns[0];
-        columns.forEach(function (col) {
-          if (col.height < shortest.height) shortest = col;
-        });
-        shortest.el.appendChild(item);
-        var img = item.querySelector("img");
-        var w = parseFloat(img.getAttribute("width")) || 1;
-        var h = parseFloat(img.getAttribute("height")) || 1;
-        shortest.height += h / w;
-      });
+      // The row gap adds a fixed height per photo; express it in column widths.
+      var colWidth = cols[0].getBoundingClientRect().width;
+      var gap = colWidth ? (parseFloat(getComputedStyle(cols[0]).rowGap) || 0) / colWidth : 0;
 
-      gallery.classList.add("is-masonry");
+      balance(count, gap).forEach(function (col, c) {
+        col.members.forEach(function (i) {
+          cols[c].appendChild(items[i]);
+        });
+      });
     }
 
     build();

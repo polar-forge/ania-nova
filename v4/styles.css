@@ -854,8 +854,13 @@ html.menu-open .menu__links a {
   margin-top: 0.1rem;
 }
 
+.film__award-item,
 .film__award-line {
   display: block;
+}
+
+.film__award-item + .film__award-item {
+  margin-top: 0.8rem;
 }
 
 .film__award-line:first-child {
@@ -1102,7 +1107,7 @@ html.menu-open .menu__links a {
   color: var(--cream);
 }
 
-/* ---------- VIDEOS: player + playlist ---------- */
+/* ---------- SHOWREEL: player + playlist ---------- */
 
 .player__caption {
   display: flex;
@@ -1128,7 +1133,7 @@ html.menu-open .menu__links a {
 
 .playlist {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 2.4rem 1.6rem;
   list-style: none;
   padding: 0;
@@ -1442,10 +1447,6 @@ html.lightbox-open .to-top {
     font-size: 1.55rem;
     letter-spacing: 0.1em;
     -webkit-text-stroke: 0.15px currentColor;
-  }
-
-  .playlist {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 

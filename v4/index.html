@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Award-winning international actress. Netflix's Legevakta, Headhunters, Wisting. Fluent in English, Norwegian and Russian. Based in Los Angeles. Represented by White Flamingo." />
     <meta name="theme-color" content="#f7f6f1" />
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <meta property="og:title" content="Ania Nova — International Actress" />
     <meta property="og:description" content="Award-winning international actress. Netflix's Legevakta, Headhunters, Wisting. Based in Los Angeles." />
     <meta property="og:image" content="https://ania-nova.com/static/hero/ania-nova-hero-1706.webp" />
@@ -70,7 +73,6 @@
           <a href="#showreel">Showreel</a>
           <a href="#filmography">Filmography</a>
           <a href="#gallery">Gallery</a>
-          <a href="#videos">Videos</a>
           <a href="#press">Press</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -86,9 +88,8 @@
         <a href="#showreel" style="--i:1"><span>02</span>Showreel</a>
         <a href="#filmography" style="--i:2"><span>03</span>Filmography</a>
         <a href="#gallery" style="--i:3"><span>04</span>Gallery</a>
-        <a href="#videos" style="--i:4"><span>05</span>Videos</a>
-        <a href="#press" style="--i:5"><span>06</span>Press</a>
-        <a href="#contact" style="--i:6"><span>07</span>Contact</a>
+        <a href="#press" style="--i:4"><span>05</span>Press</a>
+        <a href="#contact" style="--i:5"><span>06</span>Contact</a>
       </nav>
       <div class="menu__footer">
         <a href="https://www.imdb.com/name/nm7837597/" target="_blank" rel="noopener noreferrer">IMDb</a>
@@ -144,12 +145,23 @@
       <section id="showreel" data-reveal>
         <div class="container container--wide">
           <h2 class="section-title">Showreel</h2>
-          <div class="reel-frame">
-            <div class="embed" data-embed="https://player.vimeo.com/video/939138872?autoplay=1" data-title="Ania Nova — showreel">
-              <img loading="lazy" src="../static/video-thumbs/showreel-2024.webp" width="1280" height="719" alt="Ania Nova showreel" />
-              <button class="play" type="button" aria-label="Play showreel"></button>
+          <div class="player">
+            <div class="reel-frame">
+              <div class="embed player__screen">
+                <img class="player__thumb" loading="lazy" src="../static/video-thumbs/showreel-2024.webp" width="1280" height="719" alt="" />
+                <button class="play" type="button" aria-label="Play video"></button>
+              </div>
             </div>
+            <p class="player__caption"><span class="player__label">Now showing</span><span class="player__title">Showreel, 2024</span></p>
           </div>
+
+          <ul class="playlist">
+            <li><button class="playlist__item" type="button" data-vimeo="939138872" aria-current="true"><img loading="lazy" src="../static/video-thumbs/showreel-2024.webp" width="1280" height="719" alt="" /><span class="playlist__num">01</span><span class="playlist__title">Showreel, 2024</span></button></li>
+            <li><button class="playlist__item" type="button" data-id="2bJwreTFeQA"><img loading="lazy" src="../static/video-thumbs/about-me.webp" width="1280" height="720" alt="" /><span class="playlist__num">02</span><span class="playlist__title">About Me, 2021</span></button></li>
+            <li><button class="playlist__item" type="button" data-id="tJCIrA6wnP8"><img loading="lazy" src="../static/video-thumbs/the-interrogation-micromilspec.webp" width="1280" height="720" alt="" /><span class="playlist__num">03</span><span class="playlist__title">The Interrogation, 2026</span></button></li>
+            <li><button class="playlist__item" type="button" data-id="Y5tJ4EmpeKo"><img loading="lazy" src="../static/video-thumbs/stage-combat-scene.webp" width="1280" height="720" alt="" /><span class="playlist__num">04</span><span class="playlist__title">Stage Combat, 2024</span></button></li>
+            <li><button class="playlist__item" type="button" data-id="drlfmp7SKZI"><img loading="lazy" src="../static/video-thumbs/ania-nova-jack-gastelbondo.webp" width="1280" height="720" alt="" /><span class="playlist__num">05</span><span class="playlist__title">Los Angeles Reverie, 2019</span></button></li>
+          </ul>
         </div>
       </section>
 
@@ -161,11 +173,30 @@
               <img src="../static/posters/panic-attacks.jpg" width="200" height="299" loading="lazy" alt="Panic Attacks poster" />
               <span class="film__title">Panic Attacks</span>
               <span class="film__meta">Feature film</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-line">2023 Winner</span>
+                  <span class="film__award-line">Grand Prix · Zimny Film Festival, Moscow</span>
+                </span>
+              </span>
             </a>
             <a class="film" style="--i:1" href="https://www.imdb.com/title/tt16303630" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/headhunters.jpg" width="200" height="300" loading="lazy" alt="Headhunters poster" />
               <span class="film__title">Headhunters</span>
               <span class="film__meta">Series · Tanya, recurring</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2023 Winner</span>
+                    <span class="film__award-line">Gullruten Awards</span>
+                  </span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">Geneva International Film Festival</span>
+                  </span>
+                </span>
+              </span>
             </a>
             <a class="film" style="--i:2" href="https://www.imdb.com/title/tt7875794" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/wisting.jpg" width="200" height="300" loading="lazy" alt="Wisting poster" />
@@ -174,8 +205,14 @@
               <span class="film__award">
                 <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
                 <span>
-                  <span class="film__award-line">Edgar Award nominee</span>
-                  <span class="film__award-line">Gullruten · 4 nominations</span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2022 Nominee</span>
+                    <span class="film__award-line">Gullruten Awards</span>
+                  </span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">Nominee</span>
+                    <span class="film__award-line">Edgar Award</span>
+                  </span>
                 </span>
               </span>
             </a>
@@ -183,6 +220,13 @@
               <img src="../static/posters/mortal.jpg" width="200" height="300" loading="lazy" alt="Mortal poster" />
               <span class="film__title">Mortal</span>
               <span class="film__meta">Feature · dir. André Øvredal</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-line">2020 Nominee</span>
+                  <span class="film__award-line">Amanda Awards</span>
+                </span>
+              </span>
             </a>
             <a class="film" style="--i:4" href="https://www.imdb.com/title/tt9715964" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/deny.jpg" width="200" height="300" loading="lazy" alt="Deny poster" />
@@ -191,8 +235,14 @@
               <span class="film__award">
                 <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
                 <span>
-                  <span class="film__award-line">Best Supporting Actress</span>
-                  <span class="film__award-line">Independent Shorts Awards · Los Angeles 2019</span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2019 Winner</span>
+                    <span class="film__award-line">Best Supporting Actress · Independent Shorts Awards, Los Angeles</span>
+                  </span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2019 Winner</span>
+                    <span class="film__award-line">Best Featurette · Golden Movie Awards</span>
+                  </span>
                 </span>
               </span>
             </a>
@@ -200,6 +250,13 @@
               <img src="../static/posters/occupied.jpg" width="200" height="300" loading="lazy" alt="Occupied poster" />
               <span class="film__title">Occupied</span>
               <span class="film__meta">Series · Season 2</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-line">2015 Winner</span>
+                  <span class="film__award-line">New Creators Award · International Competition for Serial Dramas, Mannheim-Heidelberg</span>
+                </span>
+              </span>
             </a>
             <a class="film" style="--i:6" href="https://www.imdb.com/title/tt7556502" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/a-brixton-tale.jpg" width="200" height="300" loading="lazy" alt="A Brixton Tale poster" />
@@ -208,30 +265,68 @@
               <span class="film__award">
                 <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
                 <span>
-                  <span class="film__award-line">Slamdance 2021</span>
-                  <span class="film__award-line">Grand Jury Prize nominee</span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2021 Nominee</span>
+                    <span class="film__award-line">Grand Jury Prize · Slamdance Film Festival</span>
+                  </span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2022 Winner</span>
+                    <span class="film__award-line">Cineuropa Prize</span>
+                  </span>
                 </span>
               </span>
             </a>
             <a class="film" style="--i:7" href="https://www.imdb.com/title/tt13397550" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/hate-speech.jpg" width="200" height="300" loading="lazy" alt="Hate Speech poster" />
               <span class="film__title">Hate Speech</span>
-              <span class="film__meta">Film</span>
+              <span class="film__meta">Music video · R.A. the Rugged Man</span>
             </a>
             <a class="film" style="--i:8" href="https://www.imdb.com/title/tt7510948" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/melk.jpg" width="200" height="300" loading="lazy" alt="Melk poster" />
               <span class="film__title">Melk</span>
-              <span class="film__meta">Film</span>
+              <span class="film__meta">Series · Norwegian comedy-drama</span>
             </a>
             <a class="film" style="--i:9" href="https://www.imdb.com/title/tt8201154" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/special-delivery.jpg" width="200" height="300" loading="lazy" alt="Special Delivery poster" />
               <span class="film__title">Special Delivery</span>
               <span class="film__meta">Film</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2019 Nominee</span>
+                    <span class="film__award-line">Best Short Film · British Independent Film Festival</span>
+                  </span>
+                  <span class="film__award-item">
+                    <span class="film__award-line">2019 Nominee</span>
+                    <span class="film__award-line">The British Lion Award</span>
+                  </span>
+                </span>
+              </span>
             </a>
             <a class="film" style="--i:10" href="https://www.imdb.com/title/tt11131110" target="_blank" rel="noopener noreferrer">
               <img src="../static/posters/culture.jpg" width="200" height="300" loading="lazy" alt="Culture poster" />
               <span class="film__title">Culture</span>
               <span class="film__meta">Film</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-line">2020 Winner</span>
+                  <span class="film__award-line">JIFF Award</span>
+                </span>
+              </span>
+            </a>
+            <a class="film" style="--i:11" href="https://www.imdb.com/title/tt5093770" target="_blank" rel="noopener noreferrer">
+              <img src="../static/posters/where-is-she-now.jpg" width="200" height="300" loading="lazy" alt="Where Is She Now? poster" />
+              <span class="film__title">Where Is She Now?</span>
+              <span class="film__meta">Feature · Documentary</span>
+              <span class="film__award">
+                <svg class="film__laurel" viewBox="0 0 24 48" aria-hidden="true"><use href="#laurel" /></svg>
+                <span>
+                  <span class="film__award-line">Award-winning documentary</span>
+                  <span class="film__award-line">26 wins · 21 nominations</span>
+                </span>
+              </span>
             </a>
           </div>
         </div>
@@ -246,21 +341,23 @@
           <button class="gallery__item" type="button" style="--i:1"><img loading="lazy" src="../static/gallery/ania-nova-portrait-green-backdrop.webp" width="800" height="1063" alt="Ania Nova seated portrait against a deep green backdrop" /></button>
           <button class="gallery__item" type="button" style="--i:2"><img loading="lazy" src="../static/gallery/ania-nova-film-still-bathtub.webp" width="960" height="398" alt="Ania Nova in a bathtub — film still" /></button>
           <button class="gallery__item" type="button" style="--i:3"><img loading="lazy" src="../static/gallery/ania-nova-portrait-soft-light.webp" width="800" height="1063" alt="Ania Nova soft-light portrait, hand resting on her cheek" /></button>
-          <button class="gallery__item" type="button" style="--i:4"><img loading="lazy" src="../static/gallery/ania-nova-film-still-forest.webp" width="1436" height="600" alt="Ania Nova in a forest beside an abandoned bus — film still" /></button>
-          <button class="gallery__item" type="button" style="--i:5"><img loading="lazy" src="../static/gallery/ania-nova-portrait-black-and-white.webp" width="800" height="1063" alt="Black-and-white portrait of Ania Nova in a textured knit" /></button>
-          <button class="gallery__item" type="button" style="--i:6"><img loading="lazy" src="../static/gallery/ania-nova-headshot-red-turtleneck.webp" width="800" height="1063" alt="Ania Nova headshot in a red turtleneck" /></button>
-          <button class="gallery__item" type="button" style="--i:7"><img loading="lazy" src="../static/gallery/ania-nova-portrait-dark-curtain.webp" width="800" height="1063" alt="Ania Nova in profile beside a dark curtain" /></button>
-          <button class="gallery__item" type="button" style="--i:8"><img loading="lazy" src="../static/gallery/ania-nova-portrait-studio-floor.webp" width="800" height="1063" alt="Ania Nova lying on a studio floor in black" /></button>
-          <button class="gallery__item" type="button" style="--i:9"><img loading="lazy" src="../static/gallery/ania-nova-portrait-green-armchair.webp" width="800" height="1063" alt="Ania Nova leaning on a green armchair in a studio" /></button>
-          <button class="gallery__item" type="button" style="--i:10"><img loading="lazy" src="../static/gallery/ania-nova-portrait-seated-profile.webp" width="800" height="1063" alt="Ania Nova seated on the floor, looking up, in profile" /></button>
-          <button class="gallery__item" type="button" style="--i:11"><img loading="lazy" src="../static/gallery/ania-nova-editorial-orange-hair.webp" width="1334" height="2000" alt="Ania Nova editorial portrait with sculpted orange hair and red gloves" /></button>
-          <button class="gallery__item" type="button" style="--i:12"><img loading="lazy" src="../static/gallery/ania-nova-red-carpet-red-gown.webp" width="1600" height="2000" alt="Ania Nova on the red carpet in a red ball gown" /></button>
-          <button class="gallery__item" type="button" style="--i:13"><img loading="lazy" src="../static/gallery/ania-nova-red-carpet-silver-sequins.webp" width="1333" height="2000" alt="Ania Nova on the red carpet in a silver sequin dress" /></button>
-          <button class="gallery__item" type="button" style="--i:14"><img loading="lazy" src="../static/gallery/ania-nova-the-interrogation-fur-coat.webp" width="1920" height="1080" alt="Ania Nova in a fur coat — still from The Interrogation" /></button>
-          <button class="gallery__item" type="button" style="--i:15"><img loading="lazy" src="../static/gallery/ania-nova-film-still-interrogation-room.webp" width="1920" height="1280" alt="Interrogation room scene with Ania Nova — film still" /></button>
-          <button class="gallery__item" type="button" style="--i:16"><img loading="lazy" src="../static/gallery/ania-nova-film-still-aquarium-bar.webp" width="1849" height="889" alt="Ania Nova at an aquarium bar under red light — film still" /></button>
-          <button class="gallery__item" type="button" style="--i:17"><img loading="lazy" src="../static/gallery/ania-nova-av-med-maska-vgtv.webp" width="1080" height="1070" alt="Ania Nova on VGTV's Av med maska" /></button>
-          <button class="gallery__item" type="button" style="--i:18"><img loading="lazy" src="../static/gallery/ania-nova-portrait-grey-coat.webp" width="1506" height="2000" alt="Ania Nova portrait in a grey wool coat" /></button>
+          <button class="gallery__item" type="button" style="--i:4"><img loading="lazy" src="../static/gallery/ania-nova-headshot-black-tank.webp" width="1280" height="1600" alt="Ania Nova headshot in a black tank top against a dark backdrop" /></button>
+          <button class="gallery__item" type="button" style="--i:5"><img loading="lazy" src="../static/gallery/ania-nova-film-still-forest.webp" width="1436" height="600" alt="Ania Nova in a forest beside an abandoned bus — film still" /></button>
+          <button class="gallery__item" type="button" style="--i:6"><img loading="lazy" src="../static/gallery/ania-nova-portrait-black-and-white.webp" width="800" height="1063" alt="Black-and-white portrait of Ania Nova in a textured knit" /></button>
+          <button class="gallery__item" type="button" style="--i:7"><img loading="lazy" src="../static/gallery/ania-nova-headshot-red-turtleneck.webp" width="800" height="1063" alt="Ania Nova headshot in a red turtleneck" /></button>
+          <button class="gallery__item" type="button" style="--i:8"><img loading="lazy" src="../static/gallery/ania-nova-portrait-sheer-veil.webp" width="2000" height="1178" alt="Ania Nova beneath a sheer veil in drifting smoke" /></button>
+          <button class="gallery__item" type="button" style="--i:9"><img loading="lazy" src="../static/gallery/ania-nova-portrait-dark-curtain.webp" width="800" height="1063" alt="Ania Nova in profile beside a dark curtain" /></button>
+          <button class="gallery__item" type="button" style="--i:10"><img loading="lazy" src="../static/gallery/ania-nova-portrait-studio-floor.webp" width="800" height="1063" alt="Ania Nova lying on a studio floor in black" /></button>
+          <button class="gallery__item" type="button" style="--i:11"><img loading="lazy" src="../static/gallery/ania-nova-headshot-concrete-wall.webp" width="1280" height="1600" alt="Ania Nova headshot in a white tank top against a concrete wall" /></button>
+          <button class="gallery__item" type="button" style="--i:12"><img loading="lazy" src="../static/gallery/ania-nova-portrait-green-armchair.webp" width="800" height="1063" alt="Ania Nova leaning on a green armchair in a studio" /></button>
+          <button class="gallery__item" type="button" style="--i:13"><img loading="lazy" src="../static/gallery/ania-nova-portrait-seated-profile.webp" width="800" height="1063" alt="Ania Nova seated on the floor, looking up, in profile" /></button>
+          <button class="gallery__item" type="button" style="--i:14"><img loading="lazy" src="../static/gallery/ania-nova-editorial-orange-hair.webp" width="1334" height="2000" alt="Ania Nova editorial portrait with sculpted orange hair and red gloves" /></button>
+          <button class="gallery__item" type="button" style="--i:15"><img loading="lazy" src="../static/gallery/ania-nova-red-carpet-silver-sequins.webp" width="1333" height="2000" alt="Ania Nova on the red carpet in a silver sequin dress" /></button>
+          <button class="gallery__item" type="button" style="--i:16"><img loading="lazy" src="../static/gallery/ania-nova-the-interrogation-fur-coat.webp" width="1920" height="1080" alt="Ania Nova in a fur coat — still from The Interrogation" /></button>
+          <button class="gallery__item" type="button" style="--i:17"><img loading="lazy" src="../static/gallery/ania-nova-film-still-interrogation-room.webp" width="1920" height="1280" alt="Interrogation room scene with Ania Nova — film still" /></button>
+          <button class="gallery__item" type="button" style="--i:18"><img loading="lazy" src="../static/gallery/ania-nova-film-still-aquarium-bar.webp" width="1849" height="889" alt="Ania Nova at an aquarium bar under red light — film still" /></button>
+          <button class="gallery__item" type="button" style="--i:19"><img loading="lazy" src="../static/gallery/ania-nova-vgtv-av-med-maska.webp" width="1252" height="1247" alt="Ania Nova on VGTV's Av med maska" /></button>
+          <button class="gallery__item" type="button" style="--i:20"><img loading="lazy" src="../static/gallery/ania-nova-portrait-grey-coat.webp" width="1506" height="2000" alt="Ania Nova portrait in a grey wool coat" /></button>
         </div>
 
         <div class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" aria-hidden="true">
@@ -270,35 +367,6 @@
           <button class="lightbox__btn lightbox__next" type="button" aria-label="Next photo"></button>
           <button class="lightbox__close" type="button" aria-label="Close photo viewer"></button>
           <p class="lightbox__counter" aria-live="polite"><span class="lightbox__index">1</span> / <span class="lightbox__total">19</span></p>
-        </div>
-      </section>
-
-      <section id="videos" data-reveal>
-        <div class="container">
-          <h2 class="section-title">Videos</h2>
-
-          <div class="player">
-            <div class="embed player__screen">
-              <img class="player__thumb" loading="lazy" src="../static/video-thumbs/why-do-people-lie-sometimes.webp" width="1280" height="720" alt="" />
-              <button class="play" type="button" aria-label="Play video"></button>
-            </div>
-            <p class="player__caption"><span class="player__label">Now showing</span><span class="player__title">Why do people lie sometimes</span></p>
-          </div>
-
-          <ul class="playlist">
-            <li><button class="playlist__item" type="button" data-id="FUflFQkaG_g" aria-current="true"><img loading="lazy" src="../static/video-thumbs/why-do-people-lie-sometimes.webp" width="1280" height="720" alt="" /><span class="playlist__num">01</span><span class="playlist__title">Why do people lie sometimes</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="2bJwreTFeQA"><img loading="lazy" src="../static/video-thumbs/about-me.webp" width="1280" height="720" alt="" /><span class="playlist__num">02</span><span class="playlist__title">About me</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="nI6N8Ewiq4s"><img loading="lazy" src="../static/video-thumbs/three-sisters-irina-monologue.webp" width="1280" height="720" alt="" /><span class="playlist__num">03</span><span class="playlist__title">Three Sisters — Irina's monologue (Russian)</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="Y5tJ4EmpeKo"><img loading="lazy" src="../static/video-thumbs/stage-combat-scene.webp" width="1280" height="720" alt="" /><span class="playlist__num">04</span><span class="playlist__title">Stage combat scene</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="hBGNJdshiGM"><img loading="lazy" src="../static/video-thumbs/motion-capture-scene.webp" width="1280" height="720" alt="" /><span class="playlist__num">05</span><span class="playlist__title">Motion capture scene</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="00trhTjY7F0"><img loading="lazy" src="../static/video-thumbs/presentation-video-2022.webp" width="640" height="360" alt="" /><span class="playlist__num">06</span><span class="playlist__title">Presentation video 2022 (Norwegian)</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="sfCCz_wmGso"><img loading="lazy" src="../static/video-thumbs/interview-oslo-2018.webp" width="1280" height="720" alt="" /><span class="playlist__num">07</span><span class="playlist__title">Interview, Oslo 2018</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="c4rlzRQYKPA"><img loading="lazy" src="../static/video-thumbs/about-me-russian.webp" width="640" height="360" alt="" /><span class="playlist__num">08</span><span class="playlist__title">About me (Russian)</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="YBgS_RrrnTM"><img loading="lazy" src="../static/video-thumbs/about-me-introduction.webp" width="1280" height="720" alt="" /><span class="playlist__num">09</span><span class="playlist__title">About me — introduction</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="tJCIrA6wnP8"><img loading="lazy" src="../static/video-thumbs/the-interrogation-micromilspec.webp" width="1280" height="720" alt="" /><span class="playlist__num">10</span><span class="playlist__title">The Interrogation — Micromilspec</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="aD2Xcx1De3Y"><img loading="lazy" src="../static/video-thumbs/i-came-to-say-goodbye.webp" width="1280" height="720" alt="" /><span class="playlist__num">11</span><span class="playlist__title">I came to say goodbye</span></button></li>
-            <li><button class="playlist__item" type="button" data-id="drlfmp7SKZI"><img loading="lazy" src="../static/video-thumbs/ania-nova-jack-gastelbondo.webp" width="1280" height="720" alt="" /><span class="playlist__num">12</span><span class="playlist__title">Ania Nova — dir. Jack Gastelbondo</span></button></li>
-          </ul>
         </div>
       </section>
 
