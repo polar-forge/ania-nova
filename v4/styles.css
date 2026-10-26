@@ -583,50 +583,6 @@ html.menu-open .menu__links a {
   font-style: normal;
 }
 
-/* ---------- QUOTES ---------- */
-
-.quote {
-  max-width: 76rem;
-  margin: clamp(4rem, 6vw, 6.4rem) auto 0;
-  text-align: center;
-}
-
-.quote blockquote {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(2rem, 2.4vw, 2.6rem);
-  line-height: 1.35;
-  letter-spacing: 0.005em;
-  color: var(--ink);
-}
-
-.quote figcaption {
-  margin-top: 2rem;
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.quote figcaption::before {
-  content: "— ";
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  html.js .quote blockquote {
-    opacity: 0;
-    filter: blur(6px);
-    transition: opacity 1.6s ease 0.3s, filter 1.6s ease 0.3s;
-  }
-
-  html.js .in-view .quote blockquote {
-    opacity: 1;
-    filter: none;
-  }
-}
-
 /* ---------- EMBEDS (showreel + player) ---------- */
 
 .embed {
@@ -1422,10 +1378,31 @@ html.lightbox-open .to-top {
     columns: 2;
   }
 
-  /* Phones: the playlist, filmography and press become swipe rails */
+  /* Press runs in two narrow columns here — slimmer labels */
+  .press-card__label {
+    padding: 1rem 1.2rem 1.2rem;
+  }
+
+  .press-card__outlet {
+    font-size: 1.05rem;
+    letter-spacing: 0.14em;
+  }
+
+  .press-card__title {
+    padding-right: 1.6rem;
+    font-size: 1.45rem;
+    line-height: 1.3;
+  }
+
+  .press-card::after {
+    right: 1rem;
+    bottom: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  /* Phones: the playlist and filmography become swipe rails */
   .playlist,
-  .film-grid,
-  .press-grid {
+  .film-grid {
     display: flex;
     align-items: flex-start;
     gap: var(--grid-gap);
@@ -1437,13 +1414,12 @@ html.lightbox-open .to-top {
     scrollbar-width: none;
   }
 
-  :is(.playlist, .film-grid, .press-grid)::-webkit-scrollbar {
+  :is(.playlist, .film-grid)::-webkit-scrollbar {
     display: none;
   }
 
   .playlist > li,
-  .film-grid > .film,
-  .press-grid > .press-card {
+  .film-grid > .film {
     flex: 0 0 var(--rail-item);
     margin: 0;
     scroll-snap-align: start;
@@ -1463,10 +1439,6 @@ html.lightbox-open .to-top {
     grid-auto-columns: var(--rail-item);
     grid-template-columns: none;
     grid-template-rows: repeat(4, auto);
-  }
-
-  .press-grid {
-    --rail-item: min(72vw, 32rem);
   }
 
   .hero-card h1 {

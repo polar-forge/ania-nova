@@ -388,7 +388,7 @@
     }
   })();
 
-  // PRESS — balanced card columns; a swipe rail on phones
+  // PRESS — balanced card columns, as in the gallery
   (function () {
     var grid = document.querySelector(".press-grid");
     if (!grid) return;
@@ -397,7 +397,6 @@
       item: ".press-card",
       colClass: "press-col",
       columns: function () {
-        if (window.innerWidth <= 768) return 0;
         return window.innerWidth <= 960 ? 2 : 3;
       },
       // Cards carry text too, so measure them at the real column width
