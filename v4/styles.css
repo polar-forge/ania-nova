@@ -417,19 +417,23 @@ html.menu-open .menu__links a {
   display: flex;
 }
 
-.hero-screen iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-
+/* Fill the hero edge to edge at any viewport shape — crop, never letterbox */
 .hero-video {
-  object-fit: cover;
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+/* An iframe can't object-fit, so size it to the 16:9 box that covers the hero */
+iframe.hero-video {
+  width: max(100%, 70svh * 16 / 9);
+  height: max(100%, 100vw * 9 / 16);
 }
 
 /* Cinematic curtain masks — start covering the image, slide apart on load */
@@ -576,75 +580,6 @@ html.menu-open .menu__links a {
 .bio-text em {
   color: var(--ink);
   font-style: normal;
-}
-
-/* ---------- ABOUT: DOTTED WORLD MAP ---------- */
-
-.about-map {
-  max-width: 110rem;
-  margin: clamp(4rem, 7vw, 6.5rem) auto 0;
-  padding-inline: var(--gutter);
-}
-
-.about-map__frame {
-  position: relative;
-}
-
-.about-map__dots {
-  display: block;
-  width: 100%;
-  height: auto;
-  opacity: 0.75;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-}
-
-.about-map__city {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-.about-map__city i {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 6px;
-  height: 6px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 0 4px rgba(110, 97, 78, 0.14);
-}
-
-.about-map__label {
-  position: absolute;
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  white-space: nowrap;
-}
-
-.about-map__city--oslo .about-map__label {
-  left: 0;
-  bottom: 1.2rem;
-  transform: translateX(-50%);
-}
-
-.about-map__city--london .about-map__label {
-  left: 0;
-  top: 1.2rem;
-  transform: translateX(-40%);
-}
-
-.about-map__city--moscow .about-map__label,
-.about-map__city--la .about-map__label {
-  left: 1.2rem;
-  top: 0;
-  transform: translateY(-50%);
 }
 
 /* ---------- QUOTES ---------- */
@@ -1142,8 +1077,7 @@ html.menu-open .menu__links a {
 
 .playlist__item {
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.2rem 1rem;
+  gap: 1.2rem;
   width: 100%;
   padding: 0;
   border: 0;
@@ -1153,7 +1087,6 @@ html.menu-open .menu__links a {
 }
 
 .playlist__item img {
-  grid-column: 1 / -1;
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
@@ -1171,14 +1104,6 @@ html.menu-open .menu__links a {
 .playlist__item[aria-current] img {
   filter: none;
   outline-color: var(--gold);
-}
-
-.playlist__num {
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  color: var(--gold);
-  padding-top: 0.25rem;
 }
 
 .playlist__title {
@@ -1505,10 +1430,6 @@ html.lightbox-open .to-top {
 
   .gallery.is-masonry .gallery__col {
     gap: 1rem;
-  }
-
-  .about-map__label {
-    display: none;
   }
 
   .hero-card h1 {

@@ -119,7 +119,6 @@
     iframe.src = src;
     iframe.title = title || "Video player";
     iframe.allow = "autoplay; fullscreen; picture-in-picture; encrypted-media";
-    iframe.allowFullscreen = true;
     var old = container.querySelector("iframe");
     if (old) old.remove();
     container.appendChild(iframe);
