@@ -174,10 +174,11 @@
   // into columns of near-equal height regardless of their order: tallest-first
   // into the shortest column, then keep moving or swapping items between pairs
   // of columns while that narrows the gap. Each column keeps the curated order,
-  // and the column holding the first item goes on the left.
-  function balanceColumns(sizes, count) {
+  // and the column holding the first item goes on the left. Optional `start`
+  // heights stand for items already placed: those columns keep their position.
+  function balanceColumns(sizes, count, start) {
     var columns = [];
-    for (var c = 0; c < count; c++) columns.push({ members: [], height: 0 });
+    for (var c = 0; c < count; c++) columns.push({ members: [], height: start ? start[c] : 0 });
 
     sizes
       .map(function (_, i) {
@@ -246,9 +247,11 @@
         return x - y;
       });
     });
-    columns.sort(function (x, y) {
-      return x.members[0] - y.members[0];
-    });
+    if (!start) {
+      columns.sort(function (x, y) {
+        return x.members[0] - y.members[0];
+      });
+    }
     return columns;
   }
 
@@ -279,58 +282,90 @@
   }
 
   // Collage layout as explicit flex columns: real gaps, unlike CSS multicol,
-  // which truncates margins at column breaks. With 0 columns the items go back
-  // into the container in order (a swipe rail on phones). Items past `limit`
-  // stay in the DOM but hidden, so the lightbox can still reach them.
+  // which truncates margins at column breaks. With a "Show all" button, only
+  // the first `preview` items show until it is pressed; the rest stay in the
+  // DOM but hidden, so the lightbox can still reach them. Showing them keeps
+  // what is on screen in place, balances the newcomers beneath, and slides
+  // the collage open.
   function masonry(grid, options) {
     var items = Array.prototype.slice.call(grid.querySelectorAll(options.item));
     if (!items.length) return null;
-    var built = "";
+    var more = options.more;
+    var expanded = !more;
+    var built = { count: 0, limit: 0 };
 
     function build(force) {
       var count = options.columns();
-      var limit = options.limit ? options.limit() : items.length;
-      var key = count + "/" + limit;
-      if (!force && key === built) return;
-      built = key;
+      var limit = Math.min(expanded ? Infinity : options.preview, items.length);
+      if (!force && count === built.count && limit === built.limit) return;
+      var grow = !force && count === built.count && limit > built.limit;
+      var from = grow ? built.limit : 0;
+      built = { count: count, limit: limit };
 
-      var shown = items.slice(0, limit);
-      items.forEach(function (item, i) {
-        item.hidden = i >= limit;
-      });
-      while (grid.firstChild) grid.removeChild(grid.firstChild);
-      grid.classList.toggle("is-masonry", count > 0);
-
-      if (!count) {
-        items.forEach(function (item) {
-          grid.appendChild(item);
+      var cols = [];
+      var start = null;
+      if (grow) {
+        cols = Array.prototype.slice.call(grid.children);
+        start = cols.map(function (col) {
+          return col.offsetHeight;
         });
       } else {
-        var cols = [];
+        while (grid.firstChild) grid.removeChild(grid.firstChild);
+        grid.classList.add("is-masonry");
         for (var c = 0; c < count; c++) {
           var col = document.createElement("div");
           col.className = options.colClass;
           grid.appendChild(col);
           cols.push(col);
         }
-        var gap = parseFloat(getComputedStyle(cols[0]).rowGap) || 0;
-        var sizes = options.measure(shown, cols[0]).map(function (h) {
-          return h + gap;
-        });
-        balanceColumns(sizes, count).forEach(function (col, c) {
-          col.members.forEach(function (i) {
-            cols[c].appendChild(shown[i]);
-          });
-        });
-        items.slice(limit).forEach(function (item) {
-          cols[count - 1].appendChild(item);
-        });
       }
-      if (options.onBuild) options.onBuild(shown.length, items.length);
+      items.forEach(function (item, i) {
+        item.hidden = i >= limit;
+      });
+
+      var shown = items.slice(from, limit);
+      var gap = parseFloat(getComputedStyle(cols[0]).rowGap) || 0;
+      var sizes = options.measure(shown, cols[0]).map(function (h) {
+        return h + gap;
+      });
+      balanceColumns(sizes, count, start).forEach(function (col, c) {
+        col.members.forEach(function (i) {
+          cols[c].appendChild(shown[i]);
+        });
+      });
+      items.slice(limit).forEach(function (item) {
+        cols[count - 1].appendChild(item);
+      });
+      if (more) more.hidden = limit >= items.length;
+    }
+
+    function unfold(from) {
+      var to = grid.offsetHeight;
+      if (reduceMotion || to <= from) return;
+      grid.style.height = from + "px";
+      grid.classList.add("is-unfolding");
+      void grid.offsetHeight; // commit the start height before transitioning
+      grid.style.height = to + "px";
+      grid.addEventListener("transitionend", function done(e) {
+        if (e.target !== grid) return;
+        grid.removeEventListener("transitionend", done);
+        grid.classList.remove("is-unfolding");
+        grid.style.height = "";
+      });
     }
 
     build(true);
     rearmLazyImages(items);
+
+    if (more) {
+      more.addEventListener("click", function () {
+        // Start from the height with the button, so nothing below jumps
+        var from = grid.offsetHeight + more.parentNode.offsetHeight;
+        expanded = true;
+        build();
+        unfold(from);
+      });
+    }
 
     var resizeTimer;
     window.addEventListener("resize", function () {
@@ -340,31 +375,27 @@
     return { build: build };
   }
 
-  // GALLERY — balanced photo columns; phones preview the first photos until "Show all"
+  function phone() {
+    return window.innerWidth <= 768;
+  }
+
+  // GALLERY — balanced photo columns, the first photos until "Show all"
   (function () {
     var gallery = document.querySelector(".gallery");
     if (!gallery) return;
-    var more = document.querySelector(".gallery__more");
-    var expanded = false;
-    var PREVIEW = 8;
 
     gallery.querySelectorAll(".gallery__item").forEach(function (el, i) {
       el.setAttribute("data-order", String(i));
     });
 
-    function phone() {
-      return window.innerWidth <= 768;
-    }
-
-    var layout = masonry(gallery, {
+    masonry(gallery, {
       item: ".gallery__item",
       colClass: "gallery__col",
+      more: document.querySelector("#gallery .show-all__btn"),
       columns: function () {
         return phone() ? 2 : 3;
       },
-      limit: function () {
-        return phone() && !expanded ? PREVIEW : Infinity;
-      },
+      preview: 8,
       // Photos are sized from their width/height attributes, before they load
       measure: function (shown, col) {
         var width = col.getBoundingClientRect().width;
@@ -374,21 +405,11 @@
           var h = parseFloat(img.getAttribute("height")) || 1;
           return (h / w) * width;
         });
-      },
-      onBuild: function (shown, total) {
-        if (more) more.hidden = shown >= total;
       }
     });
-
-    if (layout && more) {
-      more.addEventListener("click", function () {
-        expanded = true;
-        layout.build();
-      });
-    }
   })();
 
-  // PRESS — balanced card columns, as in the gallery
+  // PRESS — balanced card columns, the first cards until "Show all", as in the gallery
   (function () {
     var grid = document.querySelector(".press-grid");
     if (!grid) return;
@@ -396,9 +417,11 @@
     var layout = masonry(grid, {
       item: ".press-card",
       colClass: "press-col",
+      more: document.querySelector("#press .show-all__btn"),
       columns: function () {
         return window.innerWidth <= 960 ? 2 : 3;
       },
+      preview: 6,
       // Cards carry text too, so measure them at the real column width
       measure: function (shown, col) {
         shown.forEach(function (card) {

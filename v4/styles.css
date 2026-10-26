@@ -414,7 +414,8 @@ html.menu-open .menu__links a {
   padding: 0;
 }
 
-/* The video's own 16:9 shape, capped at 70svh on wide screens — phones see the whole frame */
+/* The whole 16:9 video on phones; on wide screens capped at 70svh so the name
+   below stays on the first screen */
 .hero-screen {
   position: relative;
   width: 100%;
@@ -424,7 +425,7 @@ html.menu-open .menu__links a {
   display: flex;
 }
 
-/* Fill the hero edge to edge — when capped, crop top and bottom, never letterbox */
+/* Fill the hero edge to edge — when capped, crop top and bottom, never the sides */
 .hero-video {
   position: absolute;
   top: 50%;
@@ -866,14 +867,20 @@ html.menu-open .menu__links a {
   filter: brightness(1.06);
 }
 
-.gallery__more-wrap {
+/* "Show all" under the gallery and press collages; the rest slides down */
+.show-all {
   display: flex;
   justify-content: center;
   padding: 3.2rem var(--gutter) 0;
 }
 
-.gallery__more-wrap:has(.gallery__more[hidden]) {
+.show-all:has(.show-all__btn[hidden]) {
   display: none;
+}
+
+.is-unfolding {
+  overflow: hidden;
+  transition: height 1.1s var(--ease);
 }
 
 /* ---------- LIGHTBOX ---------- */
