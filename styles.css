@@ -1,9 +1,9 @@
 /* ============================================================
-   ANIA NOVA — Cinematic Portrait Aesthetic
-   Theme: "warm paper" — ivory ground, warm brown ink, muted
+   ANIA NOVA - Cinematic Portrait Aesthetic
+   Theme: "warm paper" - ivory ground, warm brown ink, muted
    taupe accents. A light, editorial counterpoint to the dark
    screening-room version of v3.
-   Antic Didone (her favourite) carries the voice of the site —
+   Antic Didone (her favourite) carries the voice of the site -
    headings, navigation, prose, buttons. Inter is kept
    only for micro-labels and technical detail, so the didone
    never has to work at sizes where it would turn spindly.
@@ -38,6 +38,29 @@
   --grid-gap: 1.6rem; /* between cards in the filmography, gallery and press */
   --font-serif: "Antic Didone", "Georgia", serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Type: a size and letter-spacing for each text role in the TYPE section */
+  --text-display: clamp(4.2rem, 9vw, 8.8rem); /* her name in the hero */
+  --track-display: 0.14em;
+  --text-heading: clamp(2.8rem, 4.5vw, 4.2rem); /* section titles */
+  --track-heading: 0.12em;
+  --text-menu: clamp(3.2rem, 9vw, 4.8rem); /* phone menu links */
+  --track-menu: 0.04em;
+  --text-lead: clamp(1.9rem, 2.4vw, 2.3rem); /* bio, agency, video now showing */
+  --text-body: clamp(1.6rem, 2vw, 1.8rem);
+  --text-title: 1.7rem; /* films, press, videos, email */
+  --text-nav: 1.8rem;
+  --track-nav: 0.08em;
+  --text-wordmark: 1.8rem; /* her name in the header and footer */
+  --track-wordmark: 0.24em;
+  --text-tagline: clamp(1.3rem, 1.8vw, 1.6rem);
+  --track-tagline: 0.3em;
+  --text-ui: 1.35rem; /* buttons and rows of links */
+  --track-ui: 0.16em;
+  --text-label: 1.15rem; /* small capitals in Inter */
+  --track-label: 0.2em;
+  --text-small: 1.2rem; /* awards, copyright */
+  --track-small: 0.06em;
 }
 
 /* ---------- BASE ---------- */
@@ -74,7 +97,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Film grain — fixed noise layer over everything */
+/* Film grain - fixed noise layer over everything */
 body::after {
   content: "";
   position: fixed;
@@ -121,6 +144,22 @@ button {
   color: inherit;
 }
 
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+/* Read by screen readers and search engines, not shown */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--gold);
@@ -133,7 +172,7 @@ button:focus-visible {
 }
 
 p {
-  font-size: clamp(1.6rem, 2vw, 1.8rem);
+  font-size: var(--text-body);
   line-height: 1.75;
   margin: 0;
   color: var(--ink-dim);
@@ -147,8 +186,6 @@ p {
   padding: 1rem 1.6rem;
   background: var(--gold);
   color: var(--bg);
-  font-size: 1.3rem;
-  font-weight: 500;
 }
 
 .skip-link:focus {
@@ -171,6 +208,121 @@ section {
   max-width: calc(124rem + 2 * var(--gutter));
 }
 
+/* ---------- TYPE ----------
+   Every text style on the page, defined once from the type tokens.
+   Components below only place and colour their text. */
+
+.hero-card h1 {
+  font-family: var(--font-serif);
+  font-size: var(--text-display);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: var(--text-heading);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--track-heading);
+  text-transform: uppercase;
+}
+
+.menu__links a {
+  font-family: var(--font-serif);
+  font-size: var(--text-menu);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: var(--track-menu);
+}
+
+/* Lead: the bio, the agency line, the video now showing */
+.bio-text,
+.contact__agency,
+.player__title {
+  font-family: var(--font-serif);
+  font-size: var(--text-lead);
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+/* Titles of films, press pieces and videos, and the agency email */
+.film__title,
+.press-card__title,
+.playlist__title,
+.contact__email {
+  font-family: var(--font-serif);
+  font-size: var(--text-title);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.nav a {
+  font-family: var(--font-serif);
+  font-size: var(--text-nav);
+  font-weight: 400;
+  letter-spacing: var(--track-nav);
+  text-transform: uppercase;
+}
+
+/* Her name as a wordmark, header and footer */
+.brand,
+.site-footer__brand {
+  font-family: var(--font-serif);
+  font-size: var(--text-wordmark);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: var(--track-wordmark);
+  text-transform: uppercase;
+}
+
+/* Indented by its own spacing so the line centres under her name */
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-size: var(--text-tagline);
+  font-weight: 400;
+  letter-spacing: var(--track-tagline);
+  text-indent: var(--track-tagline);
+  text-transform: uppercase;
+}
+
+/* Buttons and rows of links */
+.btn,
+.menu__footer,
+.site-footer__links a {
+  font-family: var(--font-serif);
+  font-size: var(--text-ui);
+  font-weight: 400;
+  letter-spacing: var(--track-ui);
+  text-transform: uppercase;
+}
+
+/* Small capitals in Inter: credits, outlets, counters */
+.film__meta,
+.press-card__outlet,
+.player__label,
+.hero-icons span,
+.menu__links a span,
+.lightbox__counter {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+/* Small print: awards, copyright, skip link */
+.film__award,
+.site-footer__copy,
+.skip-link {
+  font-size: var(--text-small);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: var(--track-small);
+}
+
 /* ---------- BUTTONS ---------- */
 
 .btn {
@@ -182,11 +334,6 @@ section {
   border: 1px solid var(--gold);
   border-radius: 999px;
   padding: 1.1rem 3rem;
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -241,10 +388,6 @@ section {
 }
 
 .brand {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
   white-space: nowrap;
   opacity: 0;
   transform: translateY(6px);
@@ -287,11 +430,6 @@ html.menu-open .brand {
 .nav a {
   position: relative;
   padding: 1.8rem 0;
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--ink-dim);
   -webkit-text-stroke: 0.25px currentColor;
   transition: color 0.25s ease;
@@ -378,10 +516,6 @@ html.menu-open .menu {
   align-items: baseline;
   gap: 1.6rem;
   padding: 1rem 0;
-  font-family: var(--font-serif);
-  font-size: clamp(3.2rem, 9vw, 4.8rem);
-  line-height: 1.15;
-  letter-spacing: 0.04em;
   border-bottom: 1px solid var(--hairline);
   opacity: 0;
   transform: translateY(16px);
@@ -395,9 +529,6 @@ html.menu-open .menu__links a {
 }
 
 .menu__links a span {
-  font-family: var(--font-sans);
-  font-size: 1.1rem;
-  letter-spacing: 0.2em;
   color: var(--gold);
 }
 
@@ -410,11 +541,6 @@ html.menu-open .menu__links a {
   display: flex;
   gap: 2.4rem;
   padding-top: 3rem;
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--gold);
 }
 
@@ -435,7 +561,7 @@ html.menu-open .menu__links a {
   display: flex;
 }
 
-/* Fill the hero edge to edge — when capped, crop top and bottom, never the sides */
+/* Fill the hero edge to edge - when capped, crop top and bottom, never the sides */
 .hero-video {
   position: absolute;
   top: 50%;
@@ -448,7 +574,7 @@ html.menu-open .menu__links a {
   pointer-events: none;
 }
 
-/* Cinematic curtain masks — start covering the image, slide apart on load */
+/* Cinematic curtain masks - start covering the image, slide apart on load */
 .hero-mask {
   position: absolute;
   left: 0;
@@ -484,22 +610,11 @@ html.menu-open .menu__links a {
 }
 
 .hero-card h1 {
-  font-family: var(--font-serif);
-  font-size: clamp(4.2rem, 9vw, 8.8rem);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: 0.14em;
   margin: 0 0 1rem;
   white-space: nowrap;
-  text-transform: uppercase;
 }
 
 .hero-tagline {
-  font-family: var(--font-serif);
-  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
-  text-transform: uppercase;
   margin: 0 0 3.6rem;
 }
 
@@ -533,10 +648,6 @@ html.menu-open .menu__links a {
 }
 
 .hero-icons span {
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
 }
 
 .hero-icons a:hover {
@@ -551,12 +662,6 @@ html.menu-open .menu__links a {
   align-items: center;
   justify-content: center;
   gap: clamp(1.6rem, 3vw, 3rem);
-  font-family: var(--font-serif);
-  font-size: clamp(2.8rem, 4.5vw, 4.2rem);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   text-align: center;
   margin: 0 0 clamp(2.8rem, 4vw, 4.4rem);
 }
@@ -577,10 +682,6 @@ html.menu-open .menu__links a {
 }
 
 .bio-text {
-  font-family: var(--font-serif);
-  font-size: clamp(1.9rem, 2.4vw, 2.3rem);
-  font-weight: 400;
-  line-height: 1.65;
   text-align: center;
   max-width: 74rem;
   margin: 0 auto;
@@ -590,7 +691,7 @@ html.menu-open .menu__links a {
   margin-top: 1.6rem;
 }
 
-.bio-text em {
+.bio-text cite {
   color: var(--ink);
   font-style: normal;
 }
@@ -738,10 +839,6 @@ html.menu-open .menu__links a {
   margin-top: 1rem;
   padding-top: 0.9rem;
   border-top: 1px solid var(--hairline);
-  font-size: 1.2rem;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.06em;
   color: var(--gold);
 }
 
@@ -785,9 +882,6 @@ html.menu-open .menu__links a {
 .film__title {
   display: block;
   margin-top: 1.4rem;
-  font-family: var(--font-serif);
-  font-size: 1.75rem;
-  line-height: 1.25;
   color: var(--ink);
   transition: color 0.25s ease;
 }
@@ -799,10 +893,6 @@ html.menu-open .menu__links a {
 .film__meta {
   display: block;
   margin-top: 0.4rem;
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-faint);
 }
 
@@ -1011,9 +1101,6 @@ html.menu-open .menu__links a {
   left: 50%;
   bottom: 2rem;
   translate: -50% 0;
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
   color: var(--cream-dim);
   font-variant-numeric: tabular-nums;
 }
@@ -1034,22 +1121,17 @@ html.menu-open .menu__links a {
 }
 
 .player__label {
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
   color: var(--gold);
 }
 
 .player__title {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 2.6vw, 2.6rem);
   color: var(--ink);
 }
 
+/* Six videos: one row of six, or two rows of three on narrower screens */
 .playlist {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 2.4rem var(--grid-gap);
   list-style: none;
   padding: 0 var(--reel-pad);
@@ -1088,9 +1170,6 @@ html.menu-open .menu__links a {
 }
 
 .playlist__title {
-  font-family: var(--font-serif);
-  font-size: 1.55rem;
-  line-height: 1.4;
   color: var(--ink-dim);
   transition: color 0.25s ease;
 }
@@ -1154,10 +1233,6 @@ html.menu-open .menu__links a {
 
 .press-card__outlet {
   display: block;
-  font-size: 1.15rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
   color: var(--gold);
 }
 
@@ -1165,9 +1240,6 @@ html.menu-open .menu__links a {
   display: block;
   margin-top: 0.5rem;
   padding-right: 3rem;
-  font-family: var(--font-serif);
-  font-size: 1.7rem;
-  line-height: 1.35;
   color: var(--ink);
 }
 
@@ -1176,7 +1248,7 @@ html.menu-open .menu__links a {
   position: absolute;
   right: 1.4rem;
   bottom: 1.6rem;
-  font-size: 1.6rem;
+  font-size: var(--text-title);
   color: var(--gold);
   opacity: 0.8;
   transition: opacity 0.25s ease, transform 0.25s var(--ease);
@@ -1206,26 +1278,22 @@ html.menu-open .menu__links a {
 }
 
 .contact__agency {
-  display: inline-block;
   margin-top: 1.4rem;
-  font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 3vw, 3rem);
-  line-height: 1.2;
-  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.contact__agency a {
   background: linear-gradient(var(--gold), var(--gold)) left bottom / 0 1px no-repeat;
   transition: color 0.3s ease, background-size 0.5s var(--ease);
 }
 
-.contact__agency:hover {
+.contact__agency a:hover {
   color: var(--gold);
   background-size: 100% 1px;
 }
 
 .contact__email {
   margin-top: 2.4rem;
-  font-family: var(--font-serif);
-  font-size: 1.7rem;
-  letter-spacing: 0.02em;
 }
 
 .contact__email a {
@@ -1247,10 +1315,6 @@ html.menu-open .menu__links a {
 }
 
 .site-footer__brand {
-  font-family: var(--font-serif);
-  font-size: 2rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
   color: var(--ink);
 }
 
@@ -1264,11 +1328,6 @@ html.menu-open .menu__links a {
 
 .site-footer__links a {
   padding: 0.8rem 0;
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
   color: var(--ink-dim);
   transition: color 0.25s ease;
 }
@@ -1279,8 +1338,6 @@ html.menu-open .menu__links a {
 
 .site-footer__copy {
   margin-top: 2.4rem;
-  font-size: 1.2rem;
-  letter-spacing: 0.06em;
   color: var(--ink-faint);
 }
 
@@ -1365,10 +1422,17 @@ html.lightbox-open .to-top {
 /* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 1100px) {
+  :root {
+    --text-nav: 1.55rem;
+    --track-nav: 0.1em;
+  }
+
   .nav a {
-    font-size: 1.55rem;
-    letter-spacing: 0.1em;
     -webkit-text-stroke: 0.15px currentColor;
+  }
+
+  .playlist {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1394,32 +1458,29 @@ html.lightbox-open .to-top {
 @media (max-width: 768px) {
   :root {
     --grid-gap: 1rem;
+    --text-title: 1.5rem;
+    --text-label: 1.05rem;
+    --track-label: 0.14em;
+    --track-display: 0.08em;
+    --track-tagline: 0.22em;
   }
 
   .gallery {
     columns: 2;
   }
 
-  /* Press runs in two narrow columns here — slimmer labels */
+  /* Press runs in two narrow columns here, so slimmer labels */
   .press-card__label {
     padding: 1rem 1.2rem 1.2rem;
   }
 
-  .press-card__outlet {
-    font-size: 1.05rem;
-    letter-spacing: 0.14em;
-  }
-
   .press-card__title {
     padding-right: 1.6rem;
-    font-size: 1.45rem;
-    line-height: 1.3;
   }
 
   .press-card::after {
     right: 1rem;
     bottom: 1.2rem;
-    font-size: 1.3rem;
   }
 
   /* Phones: the playlist and filmography become swipe rails */
@@ -1462,15 +1523,6 @@ html.lightbox-open .to-top {
     grid-auto-columns: var(--rail-item);
     grid-template-columns: none;
     grid-template-rows: repeat(4, auto);
-  }
-
-  .hero-card h1 {
-    letter-spacing: 0.08em;
-  }
-
-  .hero-tagline {
-    letter-spacing: 0.22em;
-    text-indent: 0.22em;
   }
 
   .play {

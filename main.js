@@ -132,7 +132,7 @@
     container.classList.add("is-playing");
   }
 
-  // SHOWREEL PLAYER + PLAYLIST — one screen; picking a video replaces whatever is playing
+  // SHOWREEL PLAYER + PLAYLIST - one screen; picking a video replaces whatever is playing
   (function () {
     var screen = document.querySelector(".player__screen");
     if (!screen) return;
@@ -159,7 +159,7 @@
       var old = screen.querySelector("iframe");
       if (old) old.remove();
       screen.classList.remove("is-playing");
-      if (autoplay) mountIframe(screen, embedSrc(item), "Ania Nova — " + title);
+      if (autoplay) mountIframe(screen, embedSrc(item), "Ania Nova - " + title);
     }
 
     playBtn.addEventListener("click", function () {
@@ -177,7 +177,7 @@
     });
   })();
 
-  // BALANCED COLUMNS — shared by the gallery and press collages. Splits items
+  // BALANCED COLUMNS - shared by the gallery and press collages. Splits items
   // into columns of near-equal height regardless of their order: tallest-first
   // into the shortest column, then keep moving or swapping items between pairs
   // of columns while that narrows the gap. Each column keeps the curated order,
@@ -386,7 +386,7 @@
     return window.innerWidth <= 768;
   }
 
-  // GALLERY — balanced photo columns, the first photos until "Show all"
+  // GALLERY - balanced photo columns, the first photos until "Show all"
   (function () {
     var gallery = document.querySelector(".gallery");
     if (!gallery) return;
@@ -416,7 +416,7 @@
     });
   })();
 
-  // PRESS — balanced card columns, the first cards until "Show all", as in the gallery
+  // PRESS - balanced card columns, the first cards until "Show all", as in the gallery
   (function () {
     var grid = document.querySelector(".press-grid");
     if (!grid) return;
@@ -448,7 +448,7 @@
     }
   })();
 
-  // GALLERY LIGHTBOX — swipe, keyboard, counter, preload
+  // GALLERY LIGHTBOX - swipe, keyboard, counter, preload
   (function () {
     var buttons = Array.prototype.slice
       .call(document.querySelectorAll(".gallery__item"))

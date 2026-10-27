@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ania-nova.com/sitemap.xml
