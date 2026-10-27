@@ -16,6 +16,13 @@
   var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
+  // STAGGER ORDER: each card's place in its list times the reveal (--i in the CSS)
+  [".menu__links > a", ".film-grid > .film", ".gallery > .gallery__item", ".press-grid > .press-card"].forEach(function (selector) {
+    Array.prototype.forEach.call(document.querySelectorAll(selector), function (el, i) {
+      el.style.setProperty("--i", i);
+    });
+  });
+
   // FADE-UP ON SCROLL
   var revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window) {
