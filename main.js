@@ -288,6 +288,36 @@
     });
   }
 
+  // "Show all": reveal the rest, then slide the grid open from the height it
+  // had with the button, so nothing below jumps
+  function showAll(grid, more, reveal) {
+    more.addEventListener("click", function () {
+      var from = grid.offsetHeight + more.parentNode.offsetHeight;
+      reveal();
+      var to = grid.offsetHeight;
+      if (reduceMotion || to <= from) return;
+      grid.style.height = from + "px";
+      grid.classList.add("is-unfolding");
+      void grid.offsetHeight; // commit the start height before transitioning
+      grid.style.height = to + "px";
+      grid.addEventListener("transitionend", function done(e) {
+        if (e.target !== grid) return;
+        grid.removeEventListener("transitionend", done);
+        grid.classList.remove("is-unfolding");
+        grid.style.height = "";
+      });
+    });
+  }
+
+  // Layouts that depend on the screen width rebuild once resizing settles
+  function onResize(rebuild) {
+    var timer;
+    window.addEventListener("resize", function () {
+      clearTimeout(timer);
+      timer = setTimeout(rebuild, 150);
+    });
+  }
+
   // Collage layout as explicit flex columns: real gaps, unlike CSS multicol,
   // which truncates margins at column breaks. With a "Show all" button, only
   // the first `preview` items show until it is pressed; the rest stay in the
@@ -310,12 +340,8 @@
       built = { count: count, limit: limit };
 
       var cols = [];
-      var start = null;
       if (grow) {
         cols = Array.prototype.slice.call(grid.children);
-        start = cols.map(function (col) {
-          return col.offsetHeight;
-        });
       } else {
         while (grid.firstChild) grid.removeChild(grid.firstChild);
         grid.classList.add("is-masonry");
@@ -326,15 +352,34 @@
           cols.push(col);
         }
       }
+
+      // Each item's height as the balancing sees it, plus the gap below it
+      var gap = parseFloat(getComputedStyle(cols[0]).rowGap) || 0;
+      function sizesOf(list, col) {
+        return options.measure(list, col).map(function (h) {
+          return h + gap;
+        });
+      }
+
+      // Columns already on screen, measured the same way as the newcomers
+      var start = null;
+      if (grow) {
+        start = cols.map(function (col) {
+          var placed = Array.prototype.filter.call(col.children, function (el) {
+            return !el.hidden;
+          });
+          return sizesOf(placed, col).reduce(function (sum, h) {
+            return sum + h;
+          }, 0);
+        });
+      }
+
       items.forEach(function (item, i) {
         item.hidden = i >= limit;
       });
 
       var shown = items.slice(from, limit);
-      var gap = parseFloat(getComputedStyle(cols[0]).rowGap) || 0;
-      var sizes = options.measure(shown, cols[0]).map(function (h) {
-        return h + gap;
-      });
+      var sizes = sizesOf(shown, cols[0]);
       balanceColumns(sizes, count, start).forEach(function (col, c) {
         col.members.forEach(function (i) {
           cols[c].appendChild(shown[i]);
@@ -346,45 +391,48 @@
       if (more) more.hidden = limit >= items.length;
     }
 
-    function unfold(from) {
-      var to = grid.offsetHeight;
-      if (reduceMotion || to <= from) return;
-      grid.style.height = from + "px";
-      grid.classList.add("is-unfolding");
-      void grid.offsetHeight; // commit the start height before transitioning
-      grid.style.height = to + "px";
-      grid.addEventListener("transitionend", function done(e) {
-        if (e.target !== grid) return;
-        grid.removeEventListener("transitionend", done);
-        grid.classList.remove("is-unfolding");
-        grid.style.height = "";
-      });
-    }
-
     build(true);
     rearmLazyImages(items);
 
     if (more) {
-      more.addEventListener("click", function () {
-        // Start from the height with the button, so nothing below jumps
-        var from = grid.offsetHeight + more.parentNode.offsetHeight;
+      showAll(grid, more, function () {
         expanded = true;
         build();
-        unfold(from);
       });
     }
 
-    var resizeTimer;
-    window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(build, 150);
-    });
+    onResize(build);
     return { build: build };
   }
 
   function phone() {
     return window.innerWidth <= 768;
   }
+
+  // FILMOGRAPHY - the first two rows until "Show all"; on phones the swipe rail keeps every film
+  (function () {
+    var grid = document.querySelector(".film-grid");
+    var more = document.querySelector("#filmography .show-all__btn");
+    if (!grid || !more) return;
+    var films = Array.prototype.slice.call(grid.children);
+    var expanded = false;
+
+    function build() {
+      var columns = getComputedStyle(grid).gridTemplateColumns.split(" ").length; // as set in the CSS
+      var limit = expanded || phone() ? films.length : 2 * columns;
+      films.forEach(function (film, i) {
+        film.hidden = i >= limit;
+      });
+      more.hidden = limit >= films.length;
+    }
+
+    build();
+    showAll(grid, more, function () {
+      expanded = true;
+      build();
+    });
+    onResize(build);
+  })();
 
   // GALLERY - balanced photo columns, the first photos until "Show all"
   (function () {
@@ -403,9 +451,16 @@
         return phone() ? 2 : 3;
       },
       preview: 8,
-      // Photos are sized from their width/height attributes, before they load
-      measure: function (shown, col) {
-        var width = col.getBoundingClientRect().width;
+      // Photos are sized from their width/height attributes, before they load,
+      // and always at the column width of the gallery at its widest. The gaps
+      // stay fixed while photos scale, so measuring at the real width would
+      // reshuffle the collage screen by screen; this way every desktop gets
+      // the same arrangement, and so does every phone.
+      measure: function (shown) {
+        var style = getComputedStyle(gallery);
+        var count = gallery.children.length; // the columns
+        var widest = parseFloat(style.maxWidth) - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+        var width = (widest - (count - 1) * parseFloat(style.columnGap)) / count;
         return shown.map(function (item) {
           var img = item.querySelector("img");
           var w = parseFloat(img.getAttribute("width")) || 1;
@@ -430,9 +485,10 @@
       },
       preview: 6,
       // Cards carry text too, so measure them at the real column width
+      // (cards already in a column are measured where they are)
       measure: function (shown, col) {
         shown.forEach(function (card) {
-          col.appendChild(card);
+          if (!grid.contains(card)) col.appendChild(card);
         });
         return shown.map(function (card) {
           return card.offsetHeight;

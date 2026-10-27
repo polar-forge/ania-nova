@@ -971,7 +971,7 @@ html.menu-open .menu__links a {
   filter: brightness(1.06);
 }
 
-/* "Show all" under the gallery and press collages; the rest slides down */
+/* "Show all" under the filmography, gallery and press; the rest slides down */
 .show-all {
   display: flex;
   justify-content: center;
