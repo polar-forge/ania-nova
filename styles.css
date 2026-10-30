@@ -268,8 +268,7 @@ section {
 }
 
 /* Her name as a wordmark, header and footer */
-.brand,
-.site-footer__brand {
+.brand {
   font-family: var(--font-serif);
   font-size: var(--text-wordmark);
   font-weight: 400;
@@ -1314,16 +1313,11 @@ html.menu-open .menu__links a {
   text-align: center;
 }
 
-.site-footer__brand {
-  color: var(--ink);
-}
-
 .site-footer__links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0.4rem 2.8rem;
-  margin-top: 2.4rem;
 }
 
 .site-footer__links a {

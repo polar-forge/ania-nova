@@ -409,7 +409,7 @@
     return window.innerWidth <= 768;
   }
 
-  // FILMOGRAPHY - the first two rows until "Show all"; on phones the swipe rail keeps every film
+  // FILMOGRAPHY - the first row until "Show all"; on phones the swipe rail keeps every film
   (function () {
     var grid = document.querySelector(".film-grid");
     var more = document.querySelector("#filmography .show-all__btn");
@@ -419,7 +419,7 @@
 
     function build() {
       var columns = getComputedStyle(grid).gridTemplateColumns.split(" ").length; // as set in the CSS
-      var limit = expanded || phone() ? films.length : 2 * columns;
+      var limit = expanded || phone() ? films.length : columns;
       films.forEach(function (film, i) {
         film.hidden = i >= limit;
       });
